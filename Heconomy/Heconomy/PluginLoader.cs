@@ -18,8 +18,8 @@ namespace Heconomy
 {
 
     [Plugin(
-        PluginName = "HerbTeleportRequest",
-        Description = "Allows regular users to teleport to and summon based on an acceptance of the other user.",
+        PluginName = "Heconomy",
+        Description = "An advanced economy plugin for MiNET.",
         PluginVersion = "1.0",
         Author = "Herb9"
         )]
