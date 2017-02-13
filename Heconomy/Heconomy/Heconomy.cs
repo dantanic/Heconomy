@@ -11,6 +11,8 @@
     Directed by Herb9.
 */
 
+using MiNET;
+
 namespace Heconomy
 {
 
@@ -20,6 +22,36 @@ namespace Heconomy
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
         public Heconomy()
+        {
+
+        }
+
+        public void GetMoneySymbol()
+        {
+
+        }
+
+        public void GetDefaultMoney()
+        {
+
+        }
+
+        public void GetMoney(string player)
+        {
+
+        }
+
+        public void SetMoney(string player, float amount)
+        {
+
+        }
+
+        public bool IsRegisteredPlayer(string player)
+        {
+
+        }
+
+        public void RegisterPlayer(Player player)
         {
 
         }
