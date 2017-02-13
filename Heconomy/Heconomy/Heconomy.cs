@@ -12,6 +12,7 @@
 */
 
 using MiNET;
+using MiNET.Plugins;
 
 namespace Heconomy
 {
@@ -21,9 +22,9 @@ namespace Heconomy
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        public Heconomy()
+        public static Heconomy GetAPI()
         {
-
+            return new Heconomy();
         }
 
         public void GetMoneySymbol()
@@ -36,9 +37,9 @@ namespace Heconomy
 
         }
 
-        public void GetMoney(string player)
+        public float GetMoney(string player)
         {
-
+            return (float) 1;
         }
 
         public void SetMoney(string player, float amount)

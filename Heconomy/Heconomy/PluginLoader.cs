@@ -11,6 +11,8 @@
     Directed by Herb9.
 */
 
+using Heconomy.Command;
+
 using MiNET.Plugins;
 using MiNET.Plugins.Attributes;
 
@@ -44,7 +46,7 @@ namespace Heconomy
 
         private void RegisterCommands()
         {
-
+            Context.PluginManager.LoadCommands(new Money(Heconomy.GetAPI()));
         }
     }
 }
