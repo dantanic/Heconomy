@@ -42,10 +42,10 @@ namespace Heconomy
 
         public string GetMoneySymbol()
         {
-
+            return "$";
         }
 
-        public void GetDefaultMoney()
+        public float GetDefaultMoney()
         {
 
         }
@@ -67,7 +67,8 @@ namespace Heconomy
 
         public void RegisterPlayer(Player player)
         {
-
+            string data = GetPluginFolder() + "\\players\\" + player.Username.ToLower() + ".json";
+            File.Create(data);
         }
 
         public Player GetNameByPlayer(string player, Level level)
