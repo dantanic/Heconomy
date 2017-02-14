@@ -34,7 +34,7 @@ namespace Heconomy.Command
 
         [Command(
             Name = "money", 
-            Description = "Shows your money amount."
+            Description = "Shows player money amount or you."
             )]
         public void execute(Player sender)
         {
@@ -47,7 +47,7 @@ namespace Heconomy.Command
 
         [Command(
             Name = "money",
-            Description = "Shows your money amount."
+            Description = "Shows player money amount or you."
             )]
         public void execute(Player sender, string player)
         {

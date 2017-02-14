@@ -49,7 +49,7 @@ namespace Heconomy
             Heconomy plugin = Heconomy.GetAPI();
 
             Context.PluginManager.LoadCommands(new Money(plugin));
-            
+            Context.PluginManager.LoadCommands(new Pay(plugin));
         }
     }
 }

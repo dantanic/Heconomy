@@ -36,7 +36,7 @@ namespace Heconomy.Command
             )]
         public void execute(Player sender, string player, float amount)
         {
-            if(Plugin.IsRegisteredPlayer(player))
+            if(Plugin.IsRegisteredPlayer(player) && amount > 0)
             {
                 string symbol = Plugin.GetMoneySymbol();
 
