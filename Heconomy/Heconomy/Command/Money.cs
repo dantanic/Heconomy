@@ -40,7 +40,25 @@ namespace Heconomy.Command
         {
             float amount = Plugin.GetMoney(sender.Username);
 
-            sender.SendMessage($"{Prefix} Your money amount: {amount}");
+            string symbol = Plugin.GetMoneySymbol();
+
+            sender.SendMessage($"{Prefix} Your money amount: {amount}{symbol}");
+        }
+
+        [Command(
+            Name = "money",
+            Description = "Shows your money amount."
+            )]
+        public void execute(Player sender, string player)
+        {
+            if (Plugin.IsRegisteredPlayer(player))
+            {
+                float amount = Plugin.GetMoney(player);
+
+                string symbol = Plugin.GetMoneySymbol();
+
+                sender.SendMessage($"{Prefix} Player {player}'s money amount: {amount}{symbol}");
+            }
         }
     }
 }

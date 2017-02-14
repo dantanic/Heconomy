@@ -11,8 +11,12 @@
     Directed by Herb9.
 */
 
+using System.Linq;
+
 using MiNET;
 using MiNET.Plugins;
+
+using MiNET.Worlds;
 
 namespace Heconomy
 {
@@ -27,7 +31,7 @@ namespace Heconomy
             return new Heconomy();
         }
 
-        public void GetMoneySymbol()
+        public string GetMoneySymbol()
         {
 
         }
@@ -55,6 +59,11 @@ namespace Heconomy
         public void RegisterPlayer(Player player)
         {
 
+        }
+
+        public Player GetNameByPlayer(string player, Level level)
+        {
+            return level.Players.ToList().Find(x => x.Value.Username == player).Value ?? null;
         }
     }
 }

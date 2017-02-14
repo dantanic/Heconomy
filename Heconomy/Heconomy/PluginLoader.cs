@@ -46,7 +46,10 @@ namespace Heconomy
 
         private void RegisterCommands()
         {
-            Context.PluginManager.LoadCommands(new Money(Heconomy.GetAPI()));
+            Heconomy plugin = Heconomy.GetAPI();
+
+            Context.PluginManager.LoadCommands(new Money(plugin));
+            
         }
     }
 }
