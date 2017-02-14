@@ -11,12 +11,16 @@
     Directed by Herb9.
 */
 
-using System.Linq;
-
 using MiNET;
+
 using MiNET.Plugins;
 
 using MiNET.Worlds;
+
+using System.Linq;
+using System.IO;
+using System;
+using System.Reflection;
 
 namespace Heconomy
 {
@@ -29,6 +33,11 @@ namespace Heconomy
         public static Heconomy GetAPI()
         {
             return new Heconomy();
+        }
+
+        public string GetPluginFolder()
+        {
+            return Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)).LocalPath, "Heconomy");
         }
 
         public string GetMoneySymbol()

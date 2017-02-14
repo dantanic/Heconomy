@@ -16,6 +16,11 @@ using Heconomy.Command;
 using MiNET.Plugins;
 using MiNET.Plugins.Attributes;
 
+using System.Linq;
+using System.IO;
+using System;
+using System.Reflection;
+
 namespace Heconomy
 {
 
@@ -34,6 +39,8 @@ namespace Heconomy
         {
             Prefix = Heconomy.Prefix;
 
+            LoadDirectory();
+
             CheckUpdate();
 
             RegisterCommands();
@@ -50,6 +57,15 @@ namespace Heconomy
 
             Context.PluginManager.LoadCommands(new Money(plugin));
             Context.PluginManager.LoadCommands(new Pay(plugin));
+        }
+
+        private void LoadDirectory()
+        {
+            @Directory.CreateDirectory(Heconomy.GetAPI().GetPluginFolder());
+
+            @Directory.CreateDirectory(Heconomy.GetAPI().GetPluginFolder() + "\\players");
+
+            @File.Create(Heconomy.GetAPI().GetPluginFolder() + "settings.json");
         }
     }
 }

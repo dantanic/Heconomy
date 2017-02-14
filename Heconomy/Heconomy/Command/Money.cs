@@ -21,9 +21,9 @@ namespace Heconomy.Command
     public class Money
     {
 
-        private string Prefix { get; set; }
+        private string Prefix;
 
-        private Heconomy Plugin { get; set; }
+        private Heconomy Plugin;
 
         public Money(Heconomy plugin)
         {
