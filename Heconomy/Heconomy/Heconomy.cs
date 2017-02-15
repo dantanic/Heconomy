@@ -67,7 +67,7 @@ namespace Heconomy
 
         public void RegisterPlayer(Player player)
         {
-            string data = GetPluginFolder() + "\\players\\" + player.Username.ToLower() + ".json";
+            string data = GetPluginFolder() + "\\players\\" + player.Username.ToLower() + ".dat";
             File.Create(data);
         }
 
