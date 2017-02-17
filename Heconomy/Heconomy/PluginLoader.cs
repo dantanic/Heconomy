@@ -13,6 +13,7 @@
 
 using Heconomy.Command;
 
+using MiNET;
 using MiNET.Plugins;
 using MiNET.Plugins.Attributes;
 
@@ -33,17 +34,28 @@ namespace Heconomy
     public class PluginLoader : Plugin
     {
 
+        private Heconomy Plugin;
+
         private string Prefix;
 
         protected override void OnEnable()
         {
-            Prefix = Heconomy.Prefix;
+            Plugin = Heconomy.GetAPI(); 
+
+            Prefix = Plugin.Prefix;
+
+            Context.Server.PlayerFactory.PlayerCreated += PlayerCreated;
 
             LoadDirectory();
 
             CheckUpdate();
 
             RegisterCommands();
+        }
+
+        private void PlayerCreated(object sender, PlayerEventArgs ev)
+        {
+            ev.Player.PlayerJoin += new EventHandler(Plugin).PlayerJoin;
         }
 
         private void CheckUpdate()

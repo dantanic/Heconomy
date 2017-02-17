@@ -28,7 +28,7 @@ namespace Heconomy
     public class Heconomy
     {
 
-        public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
+        public string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
         public static Heconomy GetAPI()
         {
