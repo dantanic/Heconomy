@@ -11,23 +11,22 @@
     Directed by Herb9.
 */
 
-namespace HeconomyAPI
+namespace HeconomyAPI.Utils
 {
 
-    public class HeconomyAPI
+    public class Updater
     {
 
-        private const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
+        public double Version { get; set; }
 
-        /// <summary>
-        /// Call the api functions of HeconomyAPI.
-        /// </summary>
-        /// <returns>HeconomyAPI</returns>
-        public static HeconomyAPI GetAPI()
+        public Updater()
         {
-            return new HeconomyAPI();
+            Update();
         }
 
-
+        private void Update()
+        {
+            
+        }
     }
 }

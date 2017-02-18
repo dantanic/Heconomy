@@ -11,23 +11,23 @@
     Directed by Herb9.
 */
 
+using System;
+using MiNET;
+using MiNET.Plugins.Attributes;
+using MiNET.Plugins;
+using HeconomyAPI.Utils;
+
 namespace HeconomyAPI
 {
 
-    public class HeconomyAPI
+    public class Loader : Plugin
     {
 
-        private const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
+        private Updater Updater;
 
-        /// <summary>
-        /// Call the api functions of HeconomyAPI.
-        /// </summary>
-        /// <returns>HeconomyAPI</returns>
-        public static HeconomyAPI GetAPI()
+        protected override void OnEnable()
         {
-            return new HeconomyAPI();
+            Updater = new Updater() { Version = 1.0 };
         }
-
-
     }
 }
