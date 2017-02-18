@@ -11,23 +11,75 @@
     Directed by Herb9.
 */
 
+using HeconomyAPI.Commands;
+using HeconomyAPI.Utils;
+
+using MiNET;
+using MiNET.Plugins;
+
 namespace HeconomyAPI
 {
 
-    public class HeconomyAPI
+    public class HeconomyAPI : Plugin
     {
 
-        private const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
+        public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        /// <summary>
-        /// Call the api functions of HeconomyAPI.
-        /// </summary>
-        /// <returns>HeconomyAPI</returns>
+        private Updater Updater;
+
+        protected override void OnEnable()
+        {
+            Updater = new Updater() { Version = 1.0f };
+
+            RegisterCommands();
+        }
+
+        private void RegisterCommands()
+        {
+            var plugin = new HeconomyAPI();
+
+            Context.PluginManager.LoadCommands(new Money(plugin));
+            Context.PluginManager.LoadCommands(new Pay(plugin));
+        }
+
         public static HeconomyAPI GetAPI()
         {
             return new HeconomyAPI();
         }
 
+        public void IsRegisteredPlayer()
+        {
 
+        }
+
+        public void RegisterPlayer()
+        {
+
+        }
+
+        public void GetMoneySymbol()
+        {
+
+        }
+
+        public void GetDefaultMoney()
+        {
+
+        }
+
+        public void GetMoney()
+        {
+
+        }
+
+        public void SetMoney()
+        {
+
+        }
+
+        public void GetPlayer()
+        {
+
+        }
     }
 }

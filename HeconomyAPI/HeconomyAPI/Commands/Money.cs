@@ -11,23 +11,27 @@
     Directed by Herb9.
 */
 
-using System;
 using MiNET;
-using MiNET.Plugins.Attributes;
 using MiNET.Plugins;
-using HeconomyAPI.Utils;
+using MiNET.Plugins.Attributes;
 
-namespace HeconomyAPI
+namespace HeconomyAPI.Commands
 {
 
-    public class Loader : Plugin
+    public class Money
     {
 
-        private Updater Updater;
+        private HeconomyAPI Plugin;
 
-        protected override void OnEnable()
+        public Money(HeconomyAPI plugin)
         {
-            Updater = new Updater() { Version = 1.0 };
+            Plugin = plugin;
+        }
+
+        [Command(Name = "money", Description = "Shows player money amount or you.")]
+        public void execute(Player sender)
+        {
+
         }
     }
 }
