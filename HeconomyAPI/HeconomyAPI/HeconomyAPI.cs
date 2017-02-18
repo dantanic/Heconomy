@@ -11,29 +11,11 @@
     Directed by Herb9.
 */
 
-using MiNET;
-
-namespace Heconomy
+namespace HeconomyAPI
 {
 
-    public class EventHandler
+    public class HeconomyAPI
     {
 
-        private Heconomy Plugin;
-        
-        public EventHandler(Heconomy plugin)
-        {
-            Plugin = plugin;
-        }
-
-        public void PlayerJoin(object sender, PlayerEventArgs ev)
-        {
-            Player player = ev.Player;
-
-            if (!Plugin.IsRegisteredPlayer(player.Username))
-            {
-                Plugin.RegisterPlayer(player);
-            }
-        }
     }
 }
