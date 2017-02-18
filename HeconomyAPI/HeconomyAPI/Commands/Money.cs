@@ -21,7 +21,7 @@ namespace HeconomyAPI.Commands
     public class Money
     {
 
-        private HeconomyAPI Plugin;
+        protected HeconomyAPI Plugin { get; set; }
 
         public Money(HeconomyAPI plugin)
         {

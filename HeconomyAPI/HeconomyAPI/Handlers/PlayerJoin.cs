@@ -12,26 +12,23 @@
 */
 
 using MiNET;
-using MiNET.Plugins;
-using MiNET.Plugins.Attributes;
 
-namespace HeconomyAPI.Commands
+namespace HeconomyAPI.Handlers
 {
 
-    public class Pay
+    public class PlayerJoin
     {
 
         protected HeconomyAPI Plugin { get; set; }
 
-        public Pay(HeconomyAPI plugin)
+        public PlayerJoin(HeconomyAPI plugin)
         {
             Plugin = plugin;
         }
 
-        [Command(Name = "pay", Description = "Pays money to player.")]
-        public void execute(Player sender, string player, float amount)
+        public void handle(object sender, PlayerEventArgs eventArgs)
         {
-            
+
         }
     }
 }

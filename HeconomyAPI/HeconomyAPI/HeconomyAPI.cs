@@ -12,6 +12,7 @@
 */
 
 using HeconomyAPI.Commands;
+using HeconomyAPI.Handlers;
 using HeconomyAPI.Utils;
 
 using MiNET;
@@ -32,6 +33,14 @@ namespace HeconomyAPI
             Updater = new Updater() { Version = 1.0f };
 
             RegisterCommands();
+
+            var plugin = new HeconomyAPI();
+
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
+            {
+                Player player = args.Player;
+                player.PlayerJoin += new PlayerJoin(plugin).handle;
+            };
         }
 
         private void RegisterCommands()
