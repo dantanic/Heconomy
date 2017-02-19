@@ -31,7 +31,7 @@ namespace HeconomyAPI.Commands
         [Command(Name = "pay", Description = "Pays money to player.")]
         public void execute(Player sender, string player, float amount)
         {
-            
+
         }
     }
 }

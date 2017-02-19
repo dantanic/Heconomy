@@ -105,10 +105,5 @@ namespace HeconomyAPI
         {
 
         }
-
-        public void GetPlayer()
-        {
-
-        }
     }
 }
