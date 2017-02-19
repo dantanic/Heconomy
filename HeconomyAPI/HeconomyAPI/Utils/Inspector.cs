@@ -20,18 +20,18 @@ using System.Text;
 namespace HeconomyAPI.Utils
 {
 
-    public class Updater
+    public class Inspector
     {
 
-        public float Version { get; set; }
+        public double Version { get; set; }
 
-        public Updater()
+        public Inspector()
         {
-            byte[] path = Convert.FromBase64String("aHR0cHM6Ly9naXRodWIuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L2Jsb2IvbWFzdGVyL0hlY29ub215QVBJL0hlY29ub215QVBJL3BsdWdpbi5qc29u");
+            byte[] path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9wbHVnaW4uanNvbg==");
 
             dynamic plugin = JObject.Parse(new WebClient().DownloadString(Encoding.UTF8.GetString(path)));
 
-            if (plugin.Version.CompareTo(Version) > 0)
+            if (plugin.Version > Version)
                 Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, Please inquire developer or download new version.");
 
             else

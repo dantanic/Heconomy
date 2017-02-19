@@ -18,6 +18,12 @@ using HeconomyAPI.Utils;
 using MiNET;
 using MiNET.Plugins;
 
+using Newtonsoft.Json.Linq;
+
+using System;
+using System.IO;
+using System.Reflection;
+
 namespace HeconomyAPI
 {
 
@@ -26,21 +32,33 @@ namespace HeconomyAPI
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        private Updater Updater;
+        private static string assembly = Assembly.GetExecutingAssembly().GetName().CodeBase;
+        private static string path = Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, "HeconomyAPI\\");
+
+        private Inspector Inspector;
 
         protected override void OnEnable()
         {
-            Updater = new Updater() { Version = 1.0f };
-
-            RegisterCommands();
+            Inspector = new Inspector() { Version = 1.0 };
 
             var plugin = new HeconomyAPI();
 
             Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
             {
                 Player player = args.Player;
+
                 player.PlayerJoin += new PlayerJoin(plugin).handle;
             };
+
+            RegisterCommands();
+
+            @Directory.CreateDirectory(path);
+            @Directory.CreateDirectory(path + "\\players");
+        }
+
+        public override void OnDisable()
+        {
+
         }
 
         private void RegisterCommands()
@@ -56,24 +74,26 @@ namespace HeconomyAPI
             return new HeconomyAPI();
         }
 
-        public void IsRegisteredPlayer()
+        public bool IsRegisteredPlayer(string player)
         {
+            string data = path + "\\players\\" + player.ToLower() + ".json";
 
+            return File.Exists(data);
         }
 
-        public void RegisterPlayer()
+        public void RegisterPlayer(Player player)
         {
+            string data = path + "\\players\\" + player.Username.ToLower() + ".json";
 
+            JObject file = new JObject(
+                new JProperty("Money", 10)
+                );
+            File.WriteAllText(data, file.ToString());
         }
 
-        public void GetMoneySymbol()
+        public string GetMoneySymbol()
         {
-
-        }
-
-        public void GetDefaultMoney()
-        {
-
+            return "$";
         }
 
         public void GetMoney()

@@ -28,7 +28,12 @@ namespace HeconomyAPI.Handlers
 
         public void handle(object sender, PlayerEventArgs eventArgs)
         {
+            Player player = eventArgs.Player;
 
+            if (!Plugin.IsRegisteredPlayer(player.Username))
+            {
+                Plugin.RegisterPlayer(player);
+            }
         }
     }
 }
