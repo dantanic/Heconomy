@@ -13,7 +13,7 @@
 
 using MiNET;
 
-namespace HeconomyAPI.Handlers
+namespace HeconomyAPI.Handler
 {
 
     public class PlayerJoin

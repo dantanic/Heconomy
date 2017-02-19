@@ -17,13 +17,11 @@ using System;
 using System.Net;
 using System.Text;
 
-namespace HeconomyAPI.Utils
+namespace HeconomyAPI.Assist
 {
 
     public class Inspector
     {
-
-        public double Version { get; set; }
 
         public Inspector()
         {
@@ -31,11 +29,11 @@ namespace HeconomyAPI.Utils
 
             dynamic plugin = JObject.Parse(new WebClient().DownloadString(Encoding.UTF8.GetString(path)));
 
-            if (plugin.Version > Version)
+            if (plugin.Version.ToString() > 1.0)
                 Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, Please inquire developer or download new version.");
 
             else
-                Console.WriteLine(HeconomyAPI.Prefix + " Heconomy v1.0 successfully enabled.");
+                Console.WriteLine(HeconomyAPI.Prefix + " HeconomyAPI v1.0 successfully enabled.");
         }
     }
 }

@@ -15,23 +15,27 @@ using MiNET;
 using MiNET.Plugins;
 using MiNET.Plugins.Attributes;
 
-namespace HeconomyAPI.Commands
+namespace HeconomyAPI.Command
 {
 
-    public class Pay
+    public class Money
     {
 
         protected HeconomyAPI Plugin { get; set; }
 
-        public Pay(HeconomyAPI plugin)
+        public Money(HeconomyAPI plugin)
         {
             Plugin = plugin;
         }
 
-        [Command(Name = "pay", Description = "Pays money to player.")]
-        public void execute(Player sender, string player, float amount)
+        [Command(Name = "money", Description = "Shows player money amount or you.", Permission = "heconomyapi.command.money")]
+        public void execute(Player sender)
         {
+            int amount = Plugin.GetMoney(sender.Username);
 
+            string symbol = Plugin.GetMoneySymbol();
+
+            sender.SendMessage(HeconomyAPI.Prefix + $" Your money amount: {amount}{symbol}");
         }
     }
 }
