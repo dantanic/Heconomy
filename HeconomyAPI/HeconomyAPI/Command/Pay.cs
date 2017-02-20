@@ -11,10 +11,7 @@
     Directed by Herb9.
 */
 
-using System;
-
 using MiNET;
-using MiNET.Plugins;
 using MiNET.Plugins.Attributes;
 
 namespace HeconomyAPI.Command
@@ -23,7 +20,7 @@ namespace HeconomyAPI.Command
     public class Pay
     {
 
-        protected HeconomyAPI Plugin { get; set; }
+        private HeconomyAPI Plugin { get; set; }
 
         public Pay(HeconomyAPI plugin)
         {
@@ -31,20 +28,20 @@ namespace HeconomyAPI.Command
         }
 
         [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
-        public void execute(Player sender, string var, int amount)
+        public void execute(Player sender, string player, int amount)
         {
             string symbol = Plugin.GetMoneySymbol();
 
-            if(Plugin.IsRegisteredPlayer(var))
+            if(Plugin.IsRegisteredPlayer(player))
             {
-                sender.SendMessage(HeconomyAPI.Prefix + $" You paid {amount}{symbol} to {var}.");
+                sender.SendMessage(HeconomyAPI.Prefix + $" You paid {amount}{symbol} to {player}.");
 
                 Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
-                Plugin.SetMoney(var, Plugin.GetMoney(var) + amount);
+                Plugin.SetMoney(player, Plugin.GetMoney(player) + amount);
 
-                if(Plugin.GetPlayer(var, sender.Level) != null)
+                if(Plugin.GetPlayer(player, sender.Level) != null)
                 {
-                    Player receiver = Plugin.GetPlayer(var, sender.Level);
+                    Player receiver = Plugin.GetPlayer(player, sender.Level);
 
                     receiver.SendMessage(HeconomyAPI.Prefix + $" You have received {amount}{symbol} from {sender.Username}");
                 }

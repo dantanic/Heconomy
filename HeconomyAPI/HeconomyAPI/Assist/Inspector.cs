@@ -29,7 +29,7 @@ namespace HeconomyAPI.Assist
 
             dynamic plugin = JObject.Parse(new WebClient().DownloadString(Encoding.UTF8.GetString(path)));
 
-            if (plugin.Version.ToString() > 1.0)
+            if (plugin.Version > 1.0)
                 Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, Please inquire developer or download new version.");
 
             else

@@ -19,7 +19,7 @@ namespace HeconomyAPI.Handler
     public class PlayerJoin
     {
 
-        protected HeconomyAPI Plugin { get; set; }
+        private HeconomyAPI Plugin { get; set; }
 
         public PlayerJoin(HeconomyAPI plugin)
         {
