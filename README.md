@@ -44,6 +44,12 @@ You must installed MiNET v1.0.1322 and .NET Framework 4.6.1.
 
 You can manage player's money data using **Money** section.
 
+### Q. Can I see screenshots?
+
+<img src="http://i.imgur.com/mMcVJJQ.jpg"/>
+<br>
+<img src="http://i.imgur.com/4mcjFmc.jpg"/>
+
 ### Q. Is there provides api functions? 
 
 We provides HeconomyAPI api functions for developers, read this step and try to using api functions.
