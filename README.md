@@ -23,7 +23,7 @@ You must installed MiNET v1.0.1322 and .NET Framework 4.6.1.
 
 > | Command | Description | Permission | Arguments |
 > | :-------: | :-------: | :-------: | :-------: |
-> | `/money` | Shows player money amount or you. | default |  |
+> | `/money` | Shows your money amount. | default |  |
 > | `/pay` | Pays money to player. | default | `<player: string> <amount: int>` |  |
 
 ### Q. Is there any permissions?
@@ -50,7 +50,7 @@ You can manage player's money data using **Money** section.
 <br>
 <img src="http://i.imgur.com/4mcjFmc.jpg"/>
 
-### Q. Is there provides api functions? 
+### Q. Is there provides api functions?
 
 We provides HeconomyAPI api functions for developers, read this step and try to using api functions.
 <br>
@@ -74,10 +74,10 @@ HeconomyAPI.GetAPI().function;
 
 *Example Code.*
 
-```c#        
-[Command]        
-public void rich(Player sender)        
-{            
+```c#       
+[Command]       
+public void rich(Player sender)       
+{           
    if (HeconomyAPI.GetAPI().GetMoney(sender.Username) > 10000)
    {
       sender.SendMessage("You are rich!");   

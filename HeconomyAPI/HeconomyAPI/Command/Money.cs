@@ -27,7 +27,7 @@ namespace HeconomyAPI.Command
             Plugin = plugin;
         }
 
-        [Command(Name = "money", Description = "Shows player money amount or you.", Permission = "heconomyapi.command.money")]
+        [Command(Name = "money", Description = "Shows your money amount.", Permission = "heconomyapi.command.money")]
         public void execute(Player sender)
         {
             int amount = Plugin.GetMoney(sender.Username);
