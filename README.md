@@ -12,15 +12,109 @@ An advanced economy plugin for MiNET.
 <br>
 <br>
 You can manage your server economy with Heconomy.
+<br>
 With this plugin, you can using many features, seeing your money, pay money for other player... etc
 
 ### Q. What I have to prepare?
 
-You must installed MiNET v1.0.1322 (Minecraft PE 1.0.3 ~) and .NET Framework 4.6.1.
+You must installed MiNET v1.0.1322 and .NET Framework 4.6.1.
 
 ### Q. How to using commands?
 
-| Command | Description | Permission | Arguments | Aliases |
-| :-------: | :-------: | :-------: | :-------: | :-------: |
-| `/money` | Shows player money amount or you. | default |  |  |
-| `/pay` | Pays money to player. | default | `<player> <amount>` |  |  |
+> | Command | Description | Permission | Arguments |
+> | :-------: | :-------: | :-------: | :-------: |
+> | `/money` | Shows player money amount or you. | default |  |
+> | `/pay` | Pays money to player. | default | `<player: string> <amount: int>` |  |
+
+### Q. Is there any permissions?
+
+<dd><i><b>heconomyapi.*</b> - HeconomyAPI permissions.</i></dd>
+<dd><i><b>heconomyapi.command.money</b> - HeconomyAPI command Money permission.</i></dd>
+<dd><i><b>heconomyapi.command.pay</b> - HeconomyAPI command Pay permission.</i></dd>
+
+### Q. How to manage player's money data?
+
+<dd><i><b>example.json (example: Player's name)</b></i><dd>
+
+```json
+{
+   "Money" : 10
+}
+```
+
+You can manage player's money data using **Money** section.
+
+### Q. Is there provides api functions? 
+
+We provides HeconomyAPI api functions for developers, read this step and try to using api functions.
+<br>
+<br>
+<bb><i><b>Steps for registering HeconomyAPI api.</b></i><dd>
+
+*I. Download HeconomyAPI plugin.*
+<br>
+<br>
+*II. Include HeconomyAPI api in your C# code.*
+
+```c#
+using HeconomyAPI;
+```
+
+*III. Call the api functions.*
+
+```c#
+HeconomyAPI.GetAPI().(function);
+```
+
+<bb><i><b>API functions.</b></i><dd>
+
+###### Get Money Symbol
+```c#
+public string GetMoneySymbol()
+{
+
+}
+```
+<bb><i><b>Description: </b>Gets money symbol.</i><dd>
+<bb><i><b>Returns: </b>money symbol</i><dd>
+
+###### Get Default Money
+```c#
+public int GetDefaultMoney()
+{
+
+}
+```
+<bb><i><b>Description: </b>Gets default money amount.</i><dd>
+<bb><i><b>Returns: </b>default money amount</i><dd>
+
+###### Get Minimum Money
+```c#
+public int GetMinimumMoney()
+{
+
+}
+```
+<bb><i><b>Descriptions: </b>Gets minumum money amount.</i><dd>
+<bb><i><b>Returns: </b>minimum money amount</i><dd>
+
+###### Get Money
+```c#
+public int GetMoney(string player)
+{
+
+}
+```
+<bb><i><b>Descriptions: </b>Gets player's money amount.</i><dd>
+<bb><i><b>Arguments: </b>player's name</i><dd>
+<bb><i><b>Returns: </b>player's money amount</i><dd>
+
+###### Set Money
+```c#
+public void SetMoney(Player player, int amount)
+{
+
+}
+```
+<bb><i><b>Descriptions: </b>Sets player's money amount.</i><dd>
+<bb><i><b>Arguments: </b>player must be the Player (MiNET.Player), new money amount</i><dd>
