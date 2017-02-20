@@ -63,7 +63,20 @@ using HeconomyAPI;
 *III. Call the api functions.*
 
 ```c#
-HeconomyAPI.GetAPI().(function);
+HeconomyAPI.GetAPI().function;
+```
+
+*Example Code.*
+
+```c#        
+[Command]        
+public void rich(Player sender)        
+{            
+   if (HeconomyAPI.GetAPI().GetMoney(sender.Username) > 10000)
+   {
+      sender.SendMessage("You are rich!");   
+   }
+}
 ```
 
 <bb><i><b>API functions.</b></i><dd>
