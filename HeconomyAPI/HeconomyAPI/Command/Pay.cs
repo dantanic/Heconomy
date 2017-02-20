@@ -32,19 +32,16 @@ namespace HeconomyAPI.Command
         {
             string symbol = Plugin.GetMoneySymbol();
 
-            if(Plugin.IsRegisteredPlayer(player))
+            if((Plugin.IsRegisteredPlayer(player)) && (Plugin.GetPlayer(player, sender.Level) != null))
             {
-                sender.SendMessage(HeconomyAPI.Prefix + $" You paid {amount}{symbol} to {player}.");
+                Player receiver = Plugin.GetPlayer(player, sender.Level);
 
                 Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
                 Plugin.SetMoney(player, Plugin.GetMoney(player) + amount);
 
-                if(Plugin.GetPlayer(player, sender.Level) != null)
-                {
-                    Player receiver = Plugin.GetPlayer(player, sender.Level);
+                sender.SendMessage(HeconomyAPI.Prefix + $" You paid {amount}{symbol} to {receiver.Username}.");
 
-                    receiver.SendMessage(HeconomyAPI.Prefix + $" You have received {amount}{symbol} from {sender.Username}.");
-                }
+                receiver.SendMessage(HeconomyAPI.Prefix + $" You have received {amount}{symbol} from {sender.Username}.");
             }
         }
     }
