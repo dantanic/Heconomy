@@ -40,6 +40,22 @@ namespace HeconomyAPI
             return level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
         }
 
+        /*
+                  .o.       ooooooooo.   ooooo 
+                 .888.      `888   `Y88. `888' 
+                .8"888.      888   .d88'  888  
+               .8' `888.     888ooo88P'   888  
+              .88ooo8888.    888          888  
+             .8'     `888.   888          888  
+            o88o     o8888o o888o        o888o 
+
+            You can using api functions.
+        */
+        public static HeconomyAPI GetAPI()
+        {
+            return new HeconomyAPI();
+        }
+
         public string GetPluginFolder()
         {
             string assembly = Assembly.GetExecutingAssembly().GetName().CodeBase;
@@ -63,22 +79,6 @@ namespace HeconomyAPI
                 );
 
             File.WriteAllText(data, item.ToString());
-        }
-
-        /*
-                  .o.       ooooooooo.   ooooo 
-                 .888.      `888   `Y88. `888' 
-                .8"888.      888   .d88'  888  
-               .8' `888.     888ooo88P'   888  
-              .88ooo8888.    888          888  
-             .8'     `888.   888          888  
-            o88o     o8888o o888o        o888o 
-
-            You can using api functions.
-        */
-        public static HeconomyAPI GetAPI()
-        {
-            return new HeconomyAPI();
         }
 
         public string GetMoneySymbol()
