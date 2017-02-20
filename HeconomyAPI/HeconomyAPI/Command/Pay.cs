@@ -37,7 +37,7 @@ namespace HeconomyAPI.Command
                 Player receiver = Plugin.GetPlayer(player, sender.Level);
 
                 Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
-                Plugin.SetMoney(player, Plugin.GetMoney(player) + amount);
+                Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
 
                 sender.SendMessage(HeconomyAPI.Prefix + $" You paid {amount}{symbol} to {receiver.Username}.");
 
