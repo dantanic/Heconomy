@@ -25,7 +25,7 @@ namespace HeconomyAPI.Assist
 
         public Inspector()
         {
-            byte[] path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9wbHVnaW4uanNvbg==");
+            byte[] path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvaW5zcGVjdG9yLmpzb24=");
 
             dynamic plugin = JObject.Parse(new WebClient().DownloadString(Encoding.UTF8.GetString(path)));
 

@@ -11,7 +11,9 @@
     Directed by Herb9.
 */
 
+using System;
 using System.Text;
+using System.Net;
 using System.IO;
 
 namespace HeconomyAPI.Assist
@@ -22,15 +24,17 @@ namespace HeconomyAPI.Assist
 
         public void Create()
         {
-            string path = HeconomyAPI.GetAPI().GetPluginFolder();
+            byte[] url = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
 
-            string data = File.ReadAllText
+            string data = File.ReadAllText(new WebClient().DownloadString(Encoding.UTF8.GetString(url)));
+
+            string path = HeconomyAPI.GetAPI().GetPluginFolder();
 
             if (File.Exists(path + @"\settings.conf"))
             {
                 File.Create(path + @"\settings.conf");
 
-                File.WriteAllText(path + @"\settings.conf")
+                File.WriteAllText(path + @"\settings.conf", data);
             }
         }
 
