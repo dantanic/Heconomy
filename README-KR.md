@@ -104,8 +104,8 @@ public int GetDefaultMoney()
 
 }
 ```
-<bb><i><b>Description: </b>돈의 기본적인 수량을 가져옵니다.</i><dd>
-<bb><i><b>Returns: </b>기본적인 돈 수량</i><dd>
+<bb><i><b>설명: </b>돈의 기본적인 수량을 가져옵니다.</i><dd>
+<bb><i><b>반환: </b>기본적인 돈 수량</i><dd>
 
 ###### 최소한의 돈 수량
 ```c#
@@ -114,8 +114,8 @@ public int GetMinimumMoney()
 
 }
 ```
-<bb><i><b>Descriptions: </b>최소한의 돈 수량을 가져옵니다.</i><dd>
-<bb><i><b>Returns: </b>최소한의 돈 수량</i><dd>
+<bb><i><b>설명: </b>최소한의 돈 수량을 가져옵니다.</i><dd>
+<bb><i><b>반환: </b>최소한의 돈 수량</i><dd>
 
 ###### 돈
 ```c#
@@ -124,9 +124,9 @@ public int GetMoney(string player)
 
 }
 ```
-<bb><i><b>Descriptions: </b>사람의 돈 수량을 가져옵니다.</i><dd>
+<bb><i><b>설명: </b>사람의 돈 수량을 가져옵니다.</i><dd>
 <bb><i><b>Arguments: </b>사람의 이름</i><dd>
-<bb><i><b>Returns: </b>사람의 돈 수량</i><dd>
+<bb><i><b>반환: </b>사람의 돈 수량</i><dd>
 
 ###### 돈 설정
 ```c#
@@ -135,5 +135,5 @@ public void SetMoney(Player player, int amount)
 
 }
 ```
-<bb><i><b>Descriptions: </b>사람의 돈 수량을 설정합니다.</i><dd>
+<bb><i><b>설명: </b>사람의 돈 수량을 설정합니다.</i><dd>
 <bb><i><b>Arguments: </b>사람은 Player 의 인자여야 합니다 (MiNET.Player), 새로운 돈 수량</i><dd>
