@@ -11,6 +11,8 @@
     Directed by Herb9.
 */
 
+using HeconomyAPI.Assist;
+
 using MiNET;
 using MiNET.Worlds;
 
@@ -84,17 +86,23 @@ namespace HeconomyAPI
 
         public string GetMoneySymbol()
         {
-            return "$";
+            Config config = new Config();
+
+            return config.GetProperty("money-symbol");
         }
 
         public int GetDefaultMoney()
         {
-            return 10;
+            Config config = new Config();
+
+            return int.Parse(config.GetProperty("symbol"));
         }
 
         public int GetMinimumMoney()
         {
-            return 0;
+            Config config = new Config();
+
+            return int.Parse(config.GetProperty("minimum"));
         }
 
         public int GetMoney(string player)
