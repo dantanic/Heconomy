@@ -11,6 +11,7 @@
     Directed by Herb9.
 */
 
+using System.Text;
 using System.IO;
 
 namespace HeconomyAPI.Assist
@@ -23,8 +24,14 @@ namespace HeconomyAPI.Assist
         {
             string path = HeconomyAPI.GetAPI().GetPluginFolder();
 
-            if (!File.Exists(path + @"\settings.conf"))
+            string data = File.ReadAllText
+
+            if (File.Exists(path + @"\settings.conf"))
+            {
                 File.Create(path + @"\settings.conf");
+
+                File.WriteAllText(path + @"\settings.conf")
+            }
         }
 
         public string GetProperty(string property)
