@@ -31,11 +31,15 @@ namespace HeconomyAPI.Assist
 
         private Inspector Inspector { get; set; }
 
+        private Config Config { get; set; }
+
         protected override void OnEnable()
         {
             Plugin = HeconomyAPI.GetAPI();
 
             Inspector = new Inspector();
+
+            Config = new Config();
 
             Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
             {
