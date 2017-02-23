@@ -19,13 +19,13 @@
 
 using MiNET;
 
-namespace HeconomyAPI.Handler
+namespace HeconomyAPI.Event
 {
 
     public class PlayerJoin
     {
 
-        private HeconomyAPI Plugin { get; set; }
+        private HeconomyAPI Plugin;
 
         public PlayerJoin(HeconomyAPI plugin)
         {
@@ -37,9 +37,7 @@ namespace HeconomyAPI.Handler
             Player player = eventArgs.Player;
 
             if (!Plugin.IsRegisteredPlayer(player.Username))
-            {
                 Plugin.RegisterPlayer(player);
-            }
         }
     }
 }

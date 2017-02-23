@@ -17,9 +17,6 @@
           '-....:~ 
 */
 
-using System;
-using System.Text;
-using System.Net;
 using System.IO;
 
 namespace HeconomyAPI.Assist
@@ -28,14 +25,23 @@ namespace HeconomyAPI.Assist
     public class Resource
     {
 
+        private HeconomyAPI Plugin;
+
+        private string Source;
+        
+        public Resource(HeconomyAPI plugin)
+        {
+            Plugin = plugin;
+
+            Source = Plugin.GetPluginSource();
+        }
+
         public void CreateObject(string filename)
         {
-            byte[] url = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
+            string path = Path.GetFileName(filename);
 
-            string path = HeconomyAPI.GetAPI().GetPluginFolder();
-
-            if(File.Exists(path + @"\" + filename))
-                File.WriteAllText(path + @"\" + filename, new WebClient().DownloadString(Encoding.UTF8.GetString(url)));
+            if(path == null)
+                File.WriteAllText(Source, path);
         }
 
         public string GetProperty(string property)

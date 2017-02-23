@@ -26,7 +26,7 @@ namespace HeconomyAPI.Command
     public class Money
     {
 
-        protected HeconomyAPI Plugin { get; set; }
+        protected HeconomyAPI Plugin;
 
         public Money(HeconomyAPI plugin)
         {
@@ -40,7 +40,7 @@ namespace HeconomyAPI.Command
 
             string symbol = Plugin.GetMoneySymbol();
 
-            sender.SendMessage(HeconomyAPI.Prefix + $" Your money amount: {amount}{symbol}");
+            sender.SendMessage(HeconomyAPI.Prefix + " Your money amount: " + amount + symbol);
         }
     }
 }

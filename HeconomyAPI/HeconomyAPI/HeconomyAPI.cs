@@ -19,11 +19,10 @@
 
 using HeconomyAPI.Assist;
 using HeconomyAPI.Command;
-using HeconomyAPI.Handler;
+using HeconomyAPI.Event;
 
 using MiNET;
 using MiNET.Plugins;
-using MiNET.Plugins.Attributes;
 using MiNET.Worlds;
 
 using Newtonsoft.Json;
@@ -39,42 +38,32 @@ namespace HeconomyAPI
 
     public class HeconomyAPI : Plugin
     {
-        private static dynamic instance = null;
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        public string path = "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==";
+        private static dynamic API = null;
 
-        private AutoUpdater AutoUpdater { get; set; }
+        private AutoUpdater AutoUpdater;
 
-        private Resource Resource { get; set; }
+        private Resource Resource;
 
         protected override void OnEnable()
         {
+            RegisterCommands();
+            RegisterEvents();
+
+            SetPluginSource();
+
+            if (API is HeconomyAPI)
+                API = this;
+
             AutoUpdater = new AutoUpdater(this);
 
             AutoUpdater.Identify();
 
-            //Resource = new Resource();
+            Resource = new Resource(this);
 
-            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
-            {
-                Player player = args.Player;
-
-                player.PlayerJoin += new PlayerJoin(this).PlayerJoinEvent;
-            };
-
-            RegisterCommands();
-
-            @Directory.CreateDirectory(GetPluginFolder());
-            @Directory.CreateDirectory(GetPluginFolder() + "\\players");
-
-            //Resource.CreateObject("settings.conf");
-
-            if(instance is HeconomyAPI)
-            {
-                instance = this;
-            }
+            Resource.CreateObject("settings.conf");
         }
 
         private void RegisterCommands()
@@ -83,34 +72,58 @@ namespace HeconomyAPI
             Context.PluginManager.LoadCommands(new Pay(this));
         }
 
-        public Player GetPlayer(string player, Level level)
+        private void RegisterEvents()
         {
-            return level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
+            {
+                Player player = args.Player;
+
+                player.PlayerJoin += new PlayerJoin(this).PlayerJoinEvent;
+            };
         }
 
-        public string GetPluginFolder()
+        private void SetPluginSource()
+        {
+            @Directory.CreateDirectory(GetPluginSource());
+
+            @Directory.CreateDirectory(GetPluginSource() + "\\players");
+        }
+
+        public string GetPluginSource()
         {
             string assembly = Assembly.GetExecutingAssembly().GetName().CodeBase;
 
-            return Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, @"HeconomyAPI\");
+            return Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, "HeconomyAPI");
+        }
+
+        private void SavePlayerData(string path, JObject jobject)
+        {
+            string data = JsonConvert.SerializeObject(jobject, Formatting.Indented);
+
+            File.WriteAllText(path, data);
         }
 
         public bool IsRegisteredPlayer(string player)
         {
-            string data = GetPluginFolder() + @"\players\" + player.ToLower() + ".json";
+            string data = GetPluginSource() + "\\players\\" + player.ToLower() + ".json";
 
             return File.Exists(data);
         }
 
         public void RegisterPlayer(Player player)
         {
-            string data = GetPluginFolder() + @"\players\" + player.Username.ToLower() + ".json";
+            string data = GetPluginSource() + "\\players\\" + player.Username.ToLower() + ".json";
 
             JObject item = new JObject(
                 new JProperty("Money", GetDefaultMoney())
                 );
 
             File.WriteAllText(data, item.ToString());
+        }
+
+        public Player GetPlayer(string player, Level level)
+        {
+            return level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
         }
 
         /*
@@ -133,7 +146,7 @@ namespace HeconomyAPI
 
         public static HeconomyAPI GetAPI()
         {
-            return instance;
+            return API;
         }
 
         public string GetMoneySymbol()
@@ -153,24 +166,22 @@ namespace HeconomyAPI
 
         public int GetMoney(string player)
         {
-            string path = GetPluginFolder() + @"\players\" + player.ToLower() + ".json";
+            string path = GetPluginSource() + "\\players\\" + player.ToLower() + ".json";
 
-            JObject item = JObject.Parse(File.ReadAllText(path));
+            JObject data = JObject.Parse(File.ReadAllText(path));
 
-            return int.Parse(item["Money"].ToString());
+            return int.Parse(data["Money"].ToString());
         }
 
         public void SetMoney(string player, double amount)
         {
-            string path = GetPluginFolder() + @"\players\" + player.ToLower() + ".json";
+            string path = GetPluginSource() + "\\players\\" + player.ToLower() + ".json";
 
-            JObject item = JObject.Parse(File.ReadAllText(path));
+            JObject data = JObject.Parse(File.ReadAllText(path));
 
-            item["Money"] = amount;
+            data["Money"] = amount;
 
-            string output = JsonConvert.SerializeObject(item, Formatting.Indented);
-
-            File.WriteAllText(path, output);
+            SavePlayerData(path, data);
         }
     }
 }

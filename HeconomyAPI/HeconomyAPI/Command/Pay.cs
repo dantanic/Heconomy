@@ -26,7 +26,7 @@ namespace HeconomyAPI.Command
     public class Pay
     {
 
-        private HeconomyAPI Plugin { get; set; }
+        private HeconomyAPI Plugin;
 
         public Pay(HeconomyAPI plugin)
         {
@@ -45,9 +45,9 @@ namespace HeconomyAPI.Command
                 Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
                 Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
 
-                sender.SendMessage(HeconomyAPI.Prefix + $" You paid {amount}{symbol} to {receiver.Username}.");
+                sender.SendMessage(HeconomyAPI.Prefix + " You paid " + amount + symbol + " to " + receiver.Username + ".");
 
-                receiver.SendMessage(HeconomyAPI.Prefix + $" You have received {amount}{symbol} from {sender.Username}.");
+                receiver.SendMessage(HeconomyAPI.Prefix + $" You have received " + amount + symbol + " from " + sender.Username + ".");
             }
         }
     }
