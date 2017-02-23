@@ -93,7 +93,7 @@ namespace HeconomyAPI
         {
             string assembly = Assembly.GetExecutingAssembly().GetName().CodeBase;
 
-            return Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, "HeconomyAPI");
+            return Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, "\\HeconomyAPI");
         }
 
         private void SavePlayerData(string path, JObject jobject)
