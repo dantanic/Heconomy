@@ -17,29 +17,30 @@
           '-....:~ 
 */
 
-using MiNET;
+using System;
+using System.Text;
+using System.Net;
+using System.IO;
 
-namespace HeconomyAPI.Handler
+namespace HeconomyAPI.Assist
 {
 
-    public class PlayerJoin
+    public class Resource
     {
 
-        private HeconomyAPI Plugin { get; set; }
-
-        public PlayerJoin(HeconomyAPI plugin)
+        public void CreateObject(string filename)
         {
-            Plugin = plugin;
+            byte[] url = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
+
+            string path = HeconomyAPI.GetAPI().GetPluginFolder();
+
+            if(File.Exists(path + @"\" + filename))
+                File.WriteAllText(path + @"\" + filename, new WebClient().DownloadString(Encoding.UTF8.GetString(url)));
         }
 
-        public void PlayerJoinEvent(object sender, PlayerEventArgs eventArgs)
+        public string GetProperty(string property)
         {
-            Player player = eventArgs.Player;
-
-            if (!Plugin.IsRegisteredPlayer(player.Username))
-            {
-                Plugin.RegisterPlayer(player);
-            }
+            return "";
         }
     }
 }

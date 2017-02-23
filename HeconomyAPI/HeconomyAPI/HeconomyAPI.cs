@@ -18,8 +18,12 @@
 */
 
 using HeconomyAPI.Assist;
+using HeconomyAPI.Command;
+using HeconomyAPI.Handler;
 
 using MiNET;
+using MiNET.Plugins;
+using MiNET.Plugins.Attributes;
 using MiNET.Worlds;
 
 using Newtonsoft.Json;
@@ -33,14 +37,50 @@ using System.Reflection;
 namespace HeconomyAPI
 {
 
-    public class HeconomyAPI
+    public class HeconomyAPI : Plugin
     {
+        private static dynamic instance = null;
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        protected HeconomyAPI()
-        {
+        public string path = "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==";
 
+        private AutoUpdater AutoUpdater { get; set; }
+
+        private Resource Resource { get; set; }
+
+        protected override void OnEnable()
+        {
+            AutoUpdater = new AutoUpdater(this);
+
+            AutoUpdater.Identify();
+
+            //Resource = new Resource();
+
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
+            {
+                Player player = args.Player;
+
+                player.PlayerJoin += new PlayerJoin(this).PlayerJoinEvent;
+            };
+
+            RegisterCommands();
+
+            @Directory.CreateDirectory(GetPluginFolder());
+            @Directory.CreateDirectory(GetPluginFolder() + "\\players");
+
+            //Resource.CreateObject("settings.conf");
+
+            if(instance is HeconomyAPI)
+            {
+                instance = this;
+            }
+        }
+
+        private void RegisterCommands()
+        {
+            Context.PluginManager.LoadCommands(new Money(this));
+            Context.PluginManager.LoadCommands(new Pay(this));
         }
 
         public Player GetPlayer(string player, Level level)
@@ -93,28 +133,22 @@ namespace HeconomyAPI
 
         public static HeconomyAPI GetAPI()
         {
-            return new HeconomyAPI();
+            return instance;
         }
 
         public string GetMoneySymbol()
         {
-            Config config = new Config();
-
-            return config.GetProperty("symbol");
+            return Resource.GetProperty("Symbol");
         }
 
         public int GetDefaultMoney()
         {
-            Config config = new Config();
-
-            return int.Parse(config.GetProperty("default"));
+            return int.Parse(Resource.GetProperty("DefaultMoney"));
         }
 
         public int GetMinimumMoney()
         {
-            Config config = new Config();
-
-            return int.Parse(config.GetProperty("minimum"));
+            return int.Parse(Resource.GetProperty("MinMoney"));
         }
 
         public int GetMoney(string player)
@@ -126,7 +160,7 @@ namespace HeconomyAPI
             return int.Parse(item["Money"].ToString());
         }
 
-        public void SetMoney(string player, int amount)
+        public void SetMoney(string player, double amount)
         {
             string path = GetPluginFolder() + @"\players\" + player.ToLower() + ".json";
 
@@ -140,4 +174,3 @@ namespace HeconomyAPI
         }
     }
 }
- 

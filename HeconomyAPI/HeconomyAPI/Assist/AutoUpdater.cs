@@ -17,29 +17,45 @@
           '-....:~ 
 */
 
-using MiNET;
+using Newtonsoft.Json.Linq;
 
-namespace HeconomyAPI.Handler
+using System;
+using System.Net;
+using System.Text;
+
+namespace HeconomyAPI.Assist
 {
 
-    public class PlayerJoin
+    public class AutoUpdater
     {
 
-        private HeconomyAPI Plugin { get; set; }
+        private HeconomyAPI Plugin;
 
-        public PlayerJoin(HeconomyAPI plugin)
+        private byte[] Path;
+
+        private dynamic Version;
+
+        public AutoUpdater(HeconomyAPI plugin)
         {
             Plugin = plugin;
+
+            Path = Convert.FromBase64String(Plugin.path);
+
+            Version = JObject.Parse(GetVersionString());
         }
 
-        public void PlayerJoinEvent(object sender, PlayerEventArgs eventArgs)
+        private string GetVersionString()
         {
-            Player player = eventArgs.Player;
+            return new WebClient().DownloadString(Encoding.UTF8.GetString(Path));
+        }
 
-            if (!Plugin.IsRegisteredPlayer(player.Username))
-            {
-                Plugin.RegisterPlayer(player);
-            }
+        public void Identify()
+        {
+            if (Version.HeconomyAPI > 1.0)
+                Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, Please download new version or inquire developer.");
+
+            else
+                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.0");
         }
     }
 }
