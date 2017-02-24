@@ -17,50 +17,26 @@
           '-....:~ 
 */
 
-using System;
-using System.IO;
-using System.Net;
-using System.Text;
+using MiNET;
 
-namespace HeconomyAPI.Assist
+namespace HeconomyAPI.Event
 {
 
-    public class Resource
+    public class EventLoader : HeconomyAPI
     {
 
-        private HeconomyAPI Plugin;
+        private PlayerJoin PlayerJoin;
 
-        private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
-
-        private string Source;
-
-        private string Contants;
-        
-        public Resource(HeconomyAPI plugin)
+        protected override void OnEnable()
         {
-            Plugin = plugin;
+            PlayerJoin = new PlayerJoin(this);
 
-            Source = Plugin.GetPluginSource();
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) => 
+            {
+                Player player = args.Player;
 
-            Contants = GetResourceString();
-        }
-
-        private string GetResourceString()
-        {
-            return new WebClient().DownloadString(Encoding.UTF8.GetString(Path));
-        }
-
-        public void CreateObject()
-        {
-            var path = Source + "\\settings.conf";
-
-            if (!File.Exists(path))
-                File.WriteAllText(path, Contants);
-        }
-
-        public string GetProperty(string property)
-        {
-            return "";
+                player.PlayerJoin += PlayerJoin.CallEvent;
+            };
         }
     }
 }

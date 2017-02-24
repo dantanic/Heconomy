@@ -26,21 +26,43 @@ namespace HeconomyAPI.Command
     public class Money
     {
 
-        protected HeconomyAPI Plugin;
+        private HeconomyAPI Plugin;
 
         public Money(HeconomyAPI plugin)
         {
             Plugin = plugin;
         }
 
-        [Command(Name = "money", Description = "Shows your money amount.", Permission = "heconomyapi.command.money")]
-        public void execute(Player sender)
+        [Command(Name = "money", Description = "Shows player's money amount or you.", Permission = "heconomyapi.command.money")]
+        public void Execute(Player sender)
         {
             int amount = Plugin.GetMoney(sender.Username);
 
             string symbol = Plugin.GetMoneySymbol();
 
             sender.SendMessage(HeconomyAPI.Prefix + " Your money amount: " + amount + symbol);
+        }
+
+        [Command(Name = "money", Description = "Shows your money amount or you.", Permission = "heconomyapi.command.money")]
+        public void Execute(Player sender, string player)
+        {
+            string symbol = Plugin.GetMoneySymbol();
+
+            if (Plugin.IsRegisteredPlayer(player))
+            {
+                int amount = Plugin.GetMoney(player);
+
+                if(Plugin.GetPlayer(player, sender.Level) != null)
+                {
+                    Player victim = Plugin.GetPlayer(player, sender.Level);
+
+                    sender.SendMessage(HeconomyAPI.Prefix + " " + victim.Username + "'s money amount: " + amount + symbol);
+
+                    return;
+                }
+
+                sender.SendMessage(HeconomyAPI.Prefix + " " + player + "'s money amount: " + amount + symbol);
+            }
         }
     }
 }

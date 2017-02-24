@@ -32,7 +32,7 @@ namespace HeconomyAPI.Event
             Plugin = plugin;
         }
 
-        public void GetEvent(object sender, PlayerEventArgs eventArgs)
+        public void CallEvent(object sender, PlayerEventArgs eventArgs)
         {
             Player player = eventArgs.Player;
 

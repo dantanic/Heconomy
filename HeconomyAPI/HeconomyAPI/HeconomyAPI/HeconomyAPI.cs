@@ -41,7 +41,7 @@ namespace HeconomyAPI
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        private static dynamic Object = null;
+        private static dynamic Object;
 
         private AutoUpdater AutoUpdater;
 
@@ -49,39 +49,25 @@ namespace HeconomyAPI
 
         protected override void OnEnable()
         {
+            Object = this;
+
             RegisterCommands();
-            RegisterEvents();
 
             SetPluginSource();
 
-            if (Object is HeconomyAPI)
-                Object = this;
-
             AutoUpdater = new AutoUpdater(this);
-
-            AutoUpdater.Identify();
 
             Resource = new Resource(this);
 
-            //Resource.CreateObject("settings.conf");
+            AutoUpdater.Identify();
+
+            Resource.CreateObject();
         }
 
         private void RegisterCommands()
         {
             Context.PluginManager.LoadCommands(new Money(this));
             Context.PluginManager.LoadCommands(new Pay(this));
-        }
-
-        private void RegisterEvents()
-        {
-            PlayerJoin join = new PlayerJoin(this);
-              
-            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
-            {
-                Player player = args.Player;
-
-                player.PlayerJoin += join.GetEvent;
-            };
         }
 
         private void SetPluginSource()
@@ -180,7 +166,7 @@ namespace HeconomyAPI
             return int.Parse(data["Money"].ToString());
         }
 
-        public void SetMoney(string player, double amount)
+        public void SetMoney(string player, int amount)
         {
             string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 

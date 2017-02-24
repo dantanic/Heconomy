@@ -31,7 +31,7 @@ namespace HeconomyAPI.Assist
 
         private HeconomyAPI Plugin;
 
-        private byte[] Source = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==");
+        private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==");
 
         private dynamic Version;
 
@@ -44,7 +44,7 @@ namespace HeconomyAPI.Assist
 
         private string GetVersionString()
         {
-            return new WebClient().DownloadString(Encoding.UTF8.GetString(Source));
+            return new WebClient().DownloadString(Encoding.UTF8.GetString(Path));
         }
 
         public void Identify()
