@@ -34,7 +34,7 @@ namespace HeconomyAPI.Command
         }
 
         [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
-        public void execute(Player sender, string player, double amount)
+        public void execute(Player sender, string player, int amount)
         {
             string symbol = Plugin.GetMoneySymbol();
 

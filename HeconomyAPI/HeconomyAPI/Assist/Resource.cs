@@ -36,7 +36,7 @@ namespace HeconomyAPI.Assist
             Source = Plugin.GetPluginSource();
         }
 
-        public void CreateObject(string filename)
+        /*public void CreateObject(string filename)
         {
             string path = Path.GetFileName(filename);
 
@@ -47,6 +47,6 @@ namespace HeconomyAPI.Assist
         public string GetProperty(string property)
         {
             return "";
-        }
+        }*/
     }
 }

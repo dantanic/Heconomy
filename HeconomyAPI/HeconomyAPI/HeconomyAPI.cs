@@ -41,7 +41,7 @@ namespace HeconomyAPI
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        private static dynamic API = null;
+        private static dynamic Object = null;
 
         private AutoUpdater AutoUpdater;
 
@@ -54,8 +54,8 @@ namespace HeconomyAPI
 
             SetPluginSource();
 
-            if (API is HeconomyAPI)
-                API = this;
+            if (Object is HeconomyAPI)
+                Object = this;
 
             AutoUpdater = new AutoUpdater(this);
 
@@ -63,7 +63,7 @@ namespace HeconomyAPI
 
             Resource = new Resource(this);
 
-            Resource.CreateObject("settings.conf");
+            //Resource.CreateObject("settings.conf");
         }
 
         private void RegisterCommands()
@@ -74,26 +74,27 @@ namespace HeconomyAPI
 
         private void RegisterEvents()
         {
+            PlayerJoin join = new PlayerJoin(this);
+              
             Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
             {
                 Player player = args.Player;
 
-                player.PlayerJoin += new PlayerJoin(this).PlayerJoinEvent;
+                player.PlayerJoin += join.GetEvent;
             };
         }
 
         private void SetPluginSource()
         {
             @Directory.CreateDirectory(GetPluginSource());
-
-            @Directory.CreateDirectory(GetPluginSource() + "\\players");
+            @Directory.CreateDirectory(GetPluginSource() + "\\users");
         }
 
         public string GetPluginSource()
         {
             string assembly = Assembly.GetExecutingAssembly().GetName().CodeBase;
 
-            return Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, "\\HeconomyAPI");
+            return Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, "HeconomyAPI");
         }
 
         private void SavePlayerData(string path, JObject jobject)
@@ -105,14 +106,14 @@ namespace HeconomyAPI
 
         public bool IsRegisteredPlayer(string player)
         {
-            string data = GetPluginSource() + "\\players\\" + player.ToLower() + ".json";
+            string data = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 
             return File.Exists(data);
         }
 
         public void RegisterPlayer(Player player)
         {
-            string data = GetPluginSource() + "\\players\\" + player.Username.ToLower() + ".json";
+            string data = GetPluginSource() + "\\users\\" + player.Username.ToLower() + ".json";
 
             JObject item = new JObject(
                 new JProperty("Money", GetDefaultMoney())
@@ -146,27 +147,33 @@ namespace HeconomyAPI
 
         public static HeconomyAPI GetAPI()
         {
-            return API;
+            return Object;
         }
 
         public string GetMoneySymbol()
         {
-            return Resource.GetProperty("Symbol");
+            //return Resource.GetProperty("Symbol");
+
+            return "$";
         }
 
         public int GetDefaultMoney()
         {
-            return int.Parse(Resource.GetProperty("DefaultMoney"));
+            //return int.Parse(Resource.GetProperty("DefaultMoney"));
+
+            return 100;
         }
 
         public int GetMinimumMoney()
         {
-            return int.Parse(Resource.GetProperty("MinMoney"));
+            //return int.Parse(Resource.GetProperty("MinMoney"));
+
+            return 0;
         }
 
         public int GetMoney(string player)
         {
-            string path = GetPluginSource() + "\\players\\" + player.ToLower() + ".json";
+            string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 
             JObject data = JObject.Parse(File.ReadAllText(path));
 
@@ -175,7 +182,7 @@ namespace HeconomyAPI
 
         public void SetMoney(string player, double amount)
         {
-            string path = GetPluginSource() + "\\players\\" + player.ToLower() + ".json";
+            string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 
             JObject data = JObject.Parse(File.ReadAllText(path));
 
