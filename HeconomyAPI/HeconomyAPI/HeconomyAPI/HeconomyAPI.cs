@@ -19,7 +19,6 @@
 
 using HeconomyAPI.Assist;
 using HeconomyAPI.Command;
-using HeconomyAPI.Event;
 
 using MiNET;
 using MiNET.Plugins;
