@@ -19,6 +19,8 @@
 
 using MiNET;
 
+using System;
+
 namespace HeconomyAPI
 {
 
@@ -37,7 +39,11 @@ namespace HeconomyAPI
             Player player = eventArgs.Player;
 
             if (!Plugin.IsRegisteredPlayer(player.Username))
-                Plugin.RegisterPlayer(player);
+            {
+                Plugin.RegisterPlayer(player.Username);
+
+                Console.WriteLine(HeconomyAPI.Prefix + " Can't find " + player.Username.ToLower() + ".json, registering " + player.Username.ToLower() + " data...");
+            }
         }
     }
 }

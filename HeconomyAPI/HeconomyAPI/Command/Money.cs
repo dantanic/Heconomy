@@ -40,7 +40,7 @@ namespace HeconomyAPI.Command
 
             string symbol = Plugin.GetMoneySymbol();
 
-            sender.SendMessage(HeconomyAPI.Prefix + " Your money amount: " + amount + symbol);
+            sender.SendMessage("Your money amount: " + amount + symbol);
         }
 
         [Command(Name = "money", Description = "Shows your money amount or you.", Permission = "heconomyapi.command.money")]
@@ -54,14 +54,14 @@ namespace HeconomyAPI.Command
 
                 if(Plugin.GetPlayer(player, sender.Level) != null)
                 {
-                    Player victim = Plugin.GetPlayer(player, sender.Level);
+                    Player target = Plugin.GetPlayer(player, sender.Level);
 
-                    sender.SendMessage(HeconomyAPI.Prefix + " " + victim.Username + "'s money amount: " + amount + symbol);
+                    sender.SendMessage(target.Username + "'s money amount: " + amount + symbol);
 
                     return;
                 }
 
-                sender.SendMessage(HeconomyAPI.Prefix + " " + player + "'s money amount: " + amount + symbol);
+                sender.SendMessage(player + "'s money amount: " + amount + symbol);
             }
         }
     }

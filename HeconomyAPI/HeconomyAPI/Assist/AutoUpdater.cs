@@ -55,7 +55,7 @@ namespace HeconomyAPI.Assist
                 Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, please download new version or inquire developer.");
 
             else
-                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.0");
+                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.1");
         }
     }
 }

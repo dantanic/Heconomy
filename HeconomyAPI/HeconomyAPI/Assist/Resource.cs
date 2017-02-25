@@ -42,6 +42,8 @@ namespace HeconomyAPI.Assist
             Plugin = plugin;
 
             Source = Plugin.GetPluginSource();
+
+            Console.WriteLine(HeconomyAPI.Prefix + " Loading settings.conf...");
         }
 
         private string GetResourceString()
@@ -60,10 +62,9 @@ namespace HeconomyAPI.Assist
 
                 string[] item = trim.Split('=');
 
-                string key = item[0];
-                string value = item[1];
+                Contents.Add(item[0], item[1]);
 
-                Contents.Add(key, value);
+                Console.WriteLine(HeconomyAPI.Prefix + " settings.conf successfully loaded.");
             }
         }
 
