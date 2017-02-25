@@ -29,7 +29,7 @@ namespace HeconomyAPI.Assist
     public class Resource
     {
 
-        private HeconomyAPI Plugin;
+        private dynamic Plugin;
 
         private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
 
@@ -85,9 +85,7 @@ namespace HeconomyAPI.Assist
             string[] data = File.ReadAllLines(path);
 
             foreach(string item in data)
-            {
                 LoadResource(item);
-            }
         }
     }
 }

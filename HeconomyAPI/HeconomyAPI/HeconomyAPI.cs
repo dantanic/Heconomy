@@ -19,7 +19,6 @@
 
 using HeconomyAPI.Assist;
 using HeconomyAPI.Command;
-using HeconomyAPI.Event;
 
 using MiNET;
 using MiNET.Plugins;
@@ -43,16 +42,15 @@ namespace HeconomyAPI
 
         private static dynamic Object;
 
-        private AutoUpdater AutoUpdater;
+        private dynamic AutoUpdater;
 
-        private Resource Resource;
+        private dynamic Resource;
 
         protected override void OnEnable()
         {
             Object = this;
 
             RegisterCommands();
-            RegisterEvents();
 
             SetPluginSource();
 
@@ -63,22 +61,19 @@ namespace HeconomyAPI
             AutoUpdater.Identify();
 
             Resource.CreateObject();
+
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
+            {
+                Player player = args.Player;
+
+                player.PlayerJoin += new PlayerListener(this).CallEvent;
+            };
         }
 
         private void RegisterCommands()
         {
             Context.PluginManager.LoadCommands(new Money(this));
             Context.PluginManager.LoadCommands(new Pay(this));
-        }
-
-        private void RegisterEvents()
-        {
-            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
-            {
-                Player player = args.Player;
-
-                player.PlayerJoin += new PlayerJoin(this).CallEvent;
-            };
         }
 
         private void SetPluginSource()

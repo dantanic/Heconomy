@@ -23,31 +23,45 @@ using MiNET.Plugins.Attributes;
 namespace HeconomyAPI.Command
 {
 
-    public class Pay
+    public class Money
     {
 
-        private HeconomyAPI Plugin;
+        private dynamic Plugin;
 
-        public Pay(HeconomyAPI plugin)
+        public Money(HeconomyAPI plugin)
         {
             Plugin = plugin;
         }
 
-        [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
-        public void Execute(Player sender, string player, int amount)
+        [Command(Name = "money", Description = "Shows player's money amount or you.", Permission = "heconomyapi.command.money")]
+        public void Execute(Player sender)
+        {
+            int amount = Plugin.GetMoney(sender.Username);
+
+            string symbol = Plugin.GetMoneySymbol();
+
+            sender.SendMessage(HeconomyAPI.Prefix + " Your money amount: " + amount + symbol);
+        }
+
+        [Command(Name = "money", Description = "Shows your money amount or you.", Permission = "heconomyapi.command.money")]
+        public void Execute(Player sender, string player)
         {
             string symbol = Plugin.GetMoneySymbol();
 
-            if((Plugin.IsRegisteredPlayer(player)) && (Plugin.GetPlayer(player, sender.Level) != null))
+            if (Plugin.IsRegisteredPlayer(player))
             {
-                Player receiver = Plugin.GetPlayer(player, sender.Level);
+                int amount = Plugin.GetMoney(player);
 
-                Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
-                Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
+                if(Plugin.GetPlayer(player, sender.Level) != null)
+                {
+                    Player victim = Plugin.GetPlayer(player, sender.Level);
 
-                sender.SendMessage(HeconomyAPI.Prefix + " You paid " + amount + symbol + " to " + receiver.Username + ".");
+                    sender.SendMessage(HeconomyAPI.Prefix + " " + victim.Username + "'s money amount: " + amount + symbol);
 
-                receiver.SendMessage(HeconomyAPI.Prefix + $" You have received " + amount + symbol + " from " + sender.Username + ".");
+                    return;
+                }
+
+                sender.SendMessage(HeconomyAPI.Prefix + " " + player + "'s money amount: " + amount + symbol);
             }
         }
     }

@@ -17,19 +17,38 @@
           '-....:~ 
 */
 
-using MiNET.Plugins;
+using MiNET;
+using MiNET.Plugins.Attributes;
 
-using System;
-
-namespace HeconomyShop
+namespace HeconomyAPI.Command
 {
 
-    public class HeconomyShop : Plugin
+    public class Pay
     {
 
-        protected override void OnEnable()
-        {
+        private dynamic Plugin;
 
+        public Pay(HeconomyAPI plugin)
+        {
+            Plugin = plugin;
+        }
+
+        [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
+        public void Execute(Player sender, string player, int amount)
+        {
+            string symbol = Plugin.GetMoneySymbol();
+
+            if((Plugin.IsRegisteredPlayer(player)) && (Plugin.GetPlayer(player, sender.Level) != null))
+            {
+                Player receiver = Plugin.GetPlayer(player, sender.Level);
+
+                Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
+                Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
+
+                sender.SendMessage(HeconomyAPI.Prefix + " You paid " + amount + symbol + " to " + receiver.Username + ".");
+
+                receiver.SendMessage(HeconomyAPI.Prefix + $" You have received " + amount + symbol + " from " + sender.Username + ".");
+            }
         }
     }
 }
