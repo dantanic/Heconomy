@@ -19,6 +19,7 @@
 
 using HeconomyAPI.Assist;
 using HeconomyAPI.Command;
+using HeconomyAPI.Event;
 
 using MiNET;
 using MiNET.Plugins;
@@ -51,6 +52,7 @@ namespace HeconomyAPI
             Object = this;
 
             RegisterCommands();
+            RegisterEvents();
 
             SetPluginSource();
 
@@ -67,6 +69,16 @@ namespace HeconomyAPI
         {
             Context.PluginManager.LoadCommands(new Money(this));
             Context.PluginManager.LoadCommands(new Pay(this));
+        }
+
+        private void RegisterEvents()
+        {
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
+            {
+                Player player = args.Player;
+
+                player.PlayerJoin += new PlayerJoin(this).CallEvent;
+            };
         }
 
         private void SetPluginSource()
@@ -137,23 +149,17 @@ namespace HeconomyAPI
 
         public string GetMoneySymbol()
         {
-            //return Resource.GetProperty("Symbol");
-
-            return "$";
+            return Resource.GetProperty("Symbol");
         }
 
         public int GetDefaultMoney()
         {
-            //return int.Parse(Resource.GetProperty("DefaultMoney"));
-
-            return 100;
+            return int.Parse(Resource.GetProperty("DefaultMoney"));
         }
 
         public int GetMinimumMoney()
         {
-            //return int.Parse(Resource.GetProperty("MinMoney"));
-
-            return 0;
+            return int.Parse(Resource.GetProperty("MinMoney"));
         }
 
         public int GetMoney(string player)
