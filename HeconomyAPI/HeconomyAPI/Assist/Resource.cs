@@ -31,19 +31,17 @@ namespace HeconomyAPI.Assist
 
         private dynamic Plugin;
 
-        private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
+        private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
 
         private Dictionary<string, string> Contents = new Dictionary<string, string>();
 
         private string Source;
-        
+
         public Resource(HeconomyAPI plugin)
         {
             Plugin = plugin;
 
             Source = Plugin.GetPluginSource();
-
-            Console.WriteLine(HeconomyAPI.Prefix + " Loading settings.conf...");
         }
 
         private string GetResourceString()
@@ -62,9 +60,10 @@ namespace HeconomyAPI.Assist
 
                 string[] item = trim.Split('=');
 
-                Contents.Add(item[0], item[1]);
+                string key = item[0];
+                string value = item[1];
 
-                Console.WriteLine(HeconomyAPI.Prefix + " settings.conf successfully loaded.");
+                Contents.Add(key, value);
             }
         }
 
@@ -85,7 +84,7 @@ namespace HeconomyAPI.Assist
 
             string[] data = File.ReadAllLines(path);
 
-            foreach(string item in data)
+            foreach (string item in data)
                 LoadResource(item);
         }
     }

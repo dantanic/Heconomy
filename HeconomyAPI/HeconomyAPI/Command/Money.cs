@@ -20,13 +20,15 @@
 using MiNET;
 using MiNET.Plugins.Attributes;
 
+using System;
+
 namespace HeconomyAPI.Command
 {
 
     public class Money
     {
 
-        private dynamic Plugin;
+        private HeconomyAPI Plugin;
 
         public Money(HeconomyAPI plugin)
         {
@@ -36,7 +38,7 @@ namespace HeconomyAPI.Command
         [Command(Name = "money", Description = "Shows player's money amount or you.", Permission = "heconomyapi.command.money")]
         public void Execute(Player sender)
         {
-            int amount = Plugin.GetMoney(sender.Username);
+            Decimal amount = Plugin.GetMoney(sender.Username);
 
             string symbol = Plugin.GetMoneySymbol();
 
@@ -50,7 +52,7 @@ namespace HeconomyAPI.Command
 
             if (Plugin.IsRegisteredPlayer(player))
             {
-                int amount = Plugin.GetMoney(player);
+                Decimal amount = Plugin.GetMoney(player);
 
                 if(Plugin.GetPlayer(player, sender.Level) != null)
                 {

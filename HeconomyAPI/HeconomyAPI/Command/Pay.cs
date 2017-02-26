@@ -20,13 +20,15 @@
 using MiNET;
 using MiNET.Plugins.Attributes;
 
+using System;
+
 namespace HeconomyAPI.Command
 {
 
     public class Pay
     {
 
-        private dynamic Plugin;
+        private HeconomyAPI Plugin;
 
         public Pay(HeconomyAPI plugin)
         {
@@ -34,20 +36,25 @@ namespace HeconomyAPI.Command
         }
 
         [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
-        public void Execute(Player sender, string player, int amount)
+        public void Execute(Player sender, string player, Decimal amount)
         {
             string symbol = Plugin.GetMoneySymbol();
 
             if((Plugin.IsRegisteredPlayer(player)) && (Plugin.GetPlayer(player, sender.Level) != null))
             {
-                Player receiver = Plugin.GetPlayer(player, sender.Level);
+                Decimal minimum = Plugin.GetMinimumMoney();
 
-                Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
-                Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
+                if((amount > minimum) && (amount > Plugin.GetMoney(sender.Username)))
+                {
+                    Player receiver = Plugin.GetPlayer(player, sender.Level);
 
-                sender.SendMessage("You paid " + amount + symbol + " to " + receiver.Username + ".");
+                    Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
+                    Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
 
-                receiver.SendMessage("You have received " + amount + symbol + " from " + sender.Username + ".");
+                    sender.SendMessage("You paid " + amount + symbol + " to " + receiver.Username + ".");
+
+                    receiver.SendMessage("You have received " + amount + symbol + " from " + sender.Username + ".");
+                }
             }
         }
     }

@@ -29,7 +29,7 @@ namespace HeconomyAPI.Assist
     public class AutoUpdater
     {
 
-        private dynamic Plugin;
+        private HeconomyAPI Plugin;
 
         private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==");
 
@@ -55,7 +55,7 @@ namespace HeconomyAPI.Assist
                 Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, please download new version or inquire developer.");
 
             else
-                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.1");
+                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.0");
         }
     }
 }

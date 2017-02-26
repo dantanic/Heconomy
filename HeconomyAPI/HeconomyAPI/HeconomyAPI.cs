@@ -40,11 +40,11 @@ namespace HeconomyAPI
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        private static dynamic Object;
+        private static HeconomyAPI Object;
 
-        private dynamic AutoUpdater;
+        private AutoUpdater AutoUpdater;
 
-        private dynamic Resource;
+        private Resource Resource;
 
         protected override void OnEnable()
         {
@@ -147,26 +147,26 @@ namespace HeconomyAPI
             return Resource.GetProperty("Symbol");
         }
 
-        public int GetDefaultMoney()
+        public Decimal GetDefaultMoney()
         {
-            return int.Parse(Resource.GetProperty("DefaultMoney"));
+            return Decimal.Parse(Resource.GetProperty("DefaultMoney"));
         }
 
-        public int GetMinimumMoney()
+        public Decimal GetMinimumMoney()
         {
-            return int.Parse(Resource.GetProperty("MinMoney"));
+            return Decimal.Parse(Resource.GetProperty("MinMoney"));
         }
 
-        public int GetMoney(string player)
+        public Decimal GetMoney(string player)
         {
             string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 
             JObject data = JObject.Parse(File.ReadAllText(path));
 
-            return int.Parse(data["Money"].ToString());
+            return Decimal.Parse(data["Money"].ToString());
         }
 
-        public void SetMoney(string player, int amount)
+        public void SetMoney(string player, Decimal amount)
         {
             string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 

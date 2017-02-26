@@ -27,7 +27,7 @@ namespace HeconomyAPI
     public class PlayerListener
     {
 
-        private dynamic Plugin;
+        private HeconomyAPI Plugin;
 
         public PlayerListener(HeconomyAPI plugin)
         {
@@ -39,11 +39,7 @@ namespace HeconomyAPI
             Player player = eventArgs.Player;
 
             if (!Plugin.IsRegisteredPlayer(player.Username))
-            {
-                Plugin.RegisterPlayer(player.Username);
-
-                Console.WriteLine(HeconomyAPI.Prefix + " Can't find " + player.Username.ToLower() + ".json, registering " + player.Username.ToLower() + " data...");
-            }
+                Plugin.RegisterPlayer(player);
         }
     }
 }
