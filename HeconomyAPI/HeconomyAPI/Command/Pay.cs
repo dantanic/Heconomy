@@ -1,26 +1,18 @@
 ﻿
 /*
-                                                    ..                   
-             .xHL                                 . uW8"                     
-          .-`8888hxxx~                  .u    .   `t888         .xn!~%x.     
-       .H8X  `%888*"           .u     .d88B :@8c   8888   .    x888   888.   
-       888X     ..x..       ud8888.  ="8888f8888r  9888.z88N  X8888   8888:  
-      '8888k .x8888888x   :888'8888.   4888>'88"   9888  888E 88888   X8888  
-       ?8888X    "88888X  d888 '88%"   4888> '     9888  888E 88888   88888> 
-        ?8888X    '88888> 8888.+"      4888>       9888  888E `8888  :88888X 
-     H8H %8888     `8888> 8888L       .d888L .+    9888  888E   `"**~ 88888> 
-    '888> 888"      8888  '8888c. .+  ^"8888*"    .8888  888"  .xx.   88888  
-     "8` .8" ..     88*    "88888%       "Y"       `%888*%"   '8888>  8888~  
-        `  x8888h. d*"       "YP'                     "`       888"  :88%    
-          !""*888%~                                             ^"===""      
-          !   `"  .                                                          
-          '-....:~ 
+    ooooo   ooooo                     .o8        .ooooo.   
+    `888'   `888'                    "888       888' `Y88. 
+     888     888   .ooooo.  oooo d8b  888oooo.  888    888 
+     888ooooo888  d88' `88b `888""8P  d88' `88b  `Vbood888 
+     888     888  888ooo888  888      888   888       888' 
+     888     888  888    .o  888      888   888     .88P'  
+    o888o   o888o `Y8bod8P' d888b     `Y8bod8P'   .oP'     
+
+    Directed by Herb9.
 */
 
 using MiNET;
 using MiNET.Plugins.Attributes;
-
-using System;
 
 namespace HeconomyAPI.Command
 {
@@ -36,15 +28,15 @@ namespace HeconomyAPI.Command
         }
 
         [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
-        public void Execute(Player sender, string player, Decimal amount)
+        public void Execute(Player sender, string player, int amount)
         {
             string symbol = Plugin.GetMoneySymbol();
 
             if((Plugin.IsRegisteredPlayer(player)) && (Plugin.GetPlayer(player, sender.Level) != null))
             {
-                Decimal minimum = Plugin.GetMinimumMoney();
+                int minimum = Plugin.GetMinimumMoney();
 
-                if((amount > minimum) && (amount > Plugin.GetMoney(sender.Username)))
+                if((amount > minimum) && (amount <= Plugin.GetMoney(sender.Username)))
                 {
                     Player receiver = Plugin.GetPlayer(player, sender.Level);
 

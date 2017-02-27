@@ -1,20 +1,14 @@
 ﻿
 /*
-                                                    ..                   
-             .xHL                                 . uW8"                     
-          .-`8888hxxx~                  .u    .   `t888         .xn!~%x.     
-       .H8X  `%888*"           .u     .d88B :@8c   8888   .    x888   888.   
-       888X     ..x..       ud8888.  ="8888f8888r  9888.z88N  X8888   8888:  
-      '8888k .x8888888x   :888'8888.   4888>'88"   9888  888E 88888   X8888  
-       ?8888X    "88888X  d888 '88%"   4888> '     9888  888E 88888   88888> 
-        ?8888X    '88888> 8888.+"      4888>       9888  888E `8888  :88888X 
-     H8H %8888     `8888> 8888L       .d888L .+    9888  888E   `"**~ 88888> 
-    '888> 888"      8888  '8888c. .+  ^"8888*"    .8888  888"  .xx.   88888  
-     "8` .8" ..     88*    "88888%       "Y"       `%888*%"   '8888>  8888~  
-        `  x8888h. d*"       "YP'                     "`       888"  :88%    
-          !""*888%~                                             ^"===""      
-          !   `"  .                                                          
-          '-....:~ 
+    ooooo   ooooo                     .o8        .ooooo.   
+    `888'   `888'                    "888       888' `Y88. 
+     888     888   .ooooo.  oooo d8b  888oooo.  888    888 
+     888ooooo888  d88' `88b `888""8P  d88' `88b  `Vbood888 
+     888     888  888ooo888  888      888   888       888' 
+     888     888  888    .o  888      888   888     .88P'  
+    o888o   o888o `Y8bod8P' d888b     `Y8bod8P'   .oP'     
+
+    Directed by Herb9.
 */
 
 using HeconomyAPI.Assist;
@@ -120,21 +114,13 @@ namespace HeconomyAPI
         }
 
         /*
-                 ..                  ....      ..         .....     .  
-              :**888H: `: .xH""    +^""888h. ~"888h     .d88888Neu. 'L 
-             X   `8888k XX888     8X.  ?8888X  8888f    F""""*8888888F 
-           '8hx  48888 ?8888    '888x  8888X  8888~   *      `"*88*"  
-           '8888 '8888 `8888    '88888 8888X   "88x:   -....    ue=:. 
-             %888>'8888  8888     `8888 8888X  X88x.           :88N  ` 
-               "8 '888"  8888       `*` 8888X '88888X          9888L   
-              .-` X*"    8888      ~`...8888X  "88888   uzu.   `8888L  
-                .xhx.    8888       x8888888X.   `%8" ,""888i   ?8888  
-              .H88888h.~`8888.>    '%"*8888888h.   "  4  9888L   %888> 
-             .~  `%88!` '888*~     ~    888888888!`   '  '8888   '88%  
-                   `"     ""            X888^"""           "*8Nu.z*"   
-                                        `88f                           
-                                         88                            
-                                         ""    
+                  .o.       ooooooooo.   ooooo 
+                 .888.      `888   `Y88. `888' 
+                .8"888.      888   .d88'  888  
+               .8' `888.     888ooo88P'   888  
+              .88ooo8888.    888          888  
+             .8'     `888.   888          888  
+            o88o     o8888o o888o        o888o 
         */
 
         public static HeconomyAPI GetAPI()
@@ -147,26 +133,26 @@ namespace HeconomyAPI
             return Resource.GetProperty("Symbol");
         }
 
-        public Decimal GetDefaultMoney()
+        public int GetDefaultMoney()
         {
-            return Decimal.Parse(Resource.GetProperty("DefaultMoney"));
+            return int.Parse(Resource.GetProperty("DefaultMoney"));
         }
 
-        public Decimal GetMinimumMoney()
+        public int GetMinimumMoney()
         {
-            return Decimal.Parse(Resource.GetProperty("MinMoney"));
+            return int.Parse(Resource.GetProperty("MinMoney"));
         }
 
-        public Decimal GetMoney(string player)
+        public int GetMoney(string player)
         {
             string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 
             JObject data = JObject.Parse(File.ReadAllText(path));
 
-            return Decimal.Parse(data["Money"].ToString());
+            return int.Parse(data["Money"].ToString());
         }
 
-        public void SetMoney(string player, Decimal amount)
+        public void SetMoney(string player, int amount)
         {
             string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
 
