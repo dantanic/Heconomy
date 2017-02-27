@@ -16,6 +16,7 @@ using HeconomyAPI.Command;
 
 using MiNET;
 using MiNET.Plugins;
+using MiNET.Plugins.Attributes;
 using MiNET.Worlds;
 
 using Newtonsoft.Json;
@@ -29,6 +30,7 @@ using System.Reflection;
 namespace HeconomyAPI
 {
 
+    [Plugin(PluginName = "HeconomyAPI", Description = "An advanced economy plugin for MiNET.", PluginVersion = "1.1", Author = "Herb9")]
     public class HeconomyAPI : Plugin
     {
 
