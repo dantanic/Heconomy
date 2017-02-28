@@ -40,7 +40,7 @@ namespace HeconomyAPI
 
         private AutoUpdater AutoUpdater;
 
-        private Resource Resource;
+        private static Resource Resource;
 
         protected override void OnEnable()
         {
@@ -79,7 +79,7 @@ namespace HeconomyAPI
 
         private void SetUpdateState()
         {
-            string state = Resource.GetProperty("AutoUpdate");
+            string state = Resource.GetProperty("AutoUpdater");
 
             if (state.Contains("true"))
             {
