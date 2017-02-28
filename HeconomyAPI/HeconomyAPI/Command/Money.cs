@@ -27,7 +27,7 @@ namespace HeconomyAPI.Command
             Plugin = plugin;
         }
 
-        [Command(Name = "money", Description = "Shows player's money amount or you.", Permission = "heconomyapi.command.money")]
+        [Command(Name = "money", Description = "Shows your money amount.", Permission = "heconomyapi.command.money")]
         public void Execute(Player sender)
         {
             int amount = Plugin.GetMoney(sender.Username);
@@ -35,28 +35,6 @@ namespace HeconomyAPI.Command
             string symbol = Plugin.GetMoneySymbol();
 
             sender.SendMessage("Your money amount: " + amount + symbol);
-        }
-
-        [Command(Name = "money", Description = "Shows your money amount or you.", Permission = "heconomyapi.command.money")]
-        public void Execute(Player sender, string player)
-        {
-            string symbol = Plugin.GetMoneySymbol();
-
-            if (Plugin.IsRegisteredPlayer(player))
-            {
-                int amount = Plugin.GetMoney(player);
-
-                if(Plugin.GetPlayer(player, sender.Level) != null)
-                {
-                    Player target = Plugin.GetPlayer(player, sender.Level);
-
-                    sender.SendMessage(target.Username + "'s money amount: " + amount + symbol);
-
-                    return;
-                }
-
-                sender.SendMessage(player + "'s money amount: " + amount + symbol);
-            }
         }
     }
 }

@@ -50,13 +50,11 @@ namespace HeconomyAPI
 
             SetPluginSource();
 
-            AutoUpdater = new AutoUpdater(this);
-
             Resource = new Resource(this);
 
-            AutoUpdater.Identify();
-
             Resource.CreateObject();
+
+            SetUpdateState();
 
             Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
             {
@@ -70,12 +68,25 @@ namespace HeconomyAPI
         {
             Context.PluginManager.LoadCommands(new Money(this));
             Context.PluginManager.LoadCommands(new Pay(this));
+            Context.PluginManager.LoadCommands(new View(this));
         }
 
         private void SetPluginSource()
         {
             @Directory.CreateDirectory(GetPluginSource());
             @Directory.CreateDirectory(GetPluginSource() + "\\users");
+        }
+
+        private void SetUpdateState()
+        {
+            string state = Resource.GetProperty("AutoUpdate");
+
+            if (state.Contains("true"))
+            {
+                AutoUpdater = new AutoUpdater(this);
+
+                AutoUpdater.Identify();
+            }
         }
 
         public string GetPluginSource()

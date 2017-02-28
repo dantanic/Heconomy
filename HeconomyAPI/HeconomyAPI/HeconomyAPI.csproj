@@ -80,6 +80,7 @@
     <Compile Include="Assist\Resource.cs" />
     <Compile Include="Command\Money.cs" />
     <Compile Include="Command\Pay.cs" />
+    <Compile Include="Command\View.cs" />
     <Compile Include="PlayerListener.cs" />
     <Compile Include="HeconomyAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,7 +92,9 @@
     <None Include="Resources\settings.conf" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="loadFromRemoteSources.xml" />
+    <Content Include="loadFromRemoteSources.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
