@@ -45,11 +45,11 @@ namespace HeconomyAPI.Assist
 
         public void Identify()
         {
-            if (Version.HeconomyAPI > 1.0)
+            if (Version.HeconomyAPI > 1.2)
                 Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, please download new version or inquire developer.");
 
             else
-                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.1");
+                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.2");
         }
     }
 }

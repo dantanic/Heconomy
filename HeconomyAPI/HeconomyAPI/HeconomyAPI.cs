@@ -30,7 +30,7 @@ using System.Reflection;
 namespace HeconomyAPI
 {
 
-    [Plugin(PluginName = "HeconomyAPI", Description = "An advanced economy plugin for MiNET.", PluginVersion = "1.1", Author = "Herb9")]
+    [Plugin(PluginName = "HeconomyAPI", Description = "An advanced economy plugin for MiNET.", PluginVersion = "1.2", Author = "Herb9")]
     public class HeconomyAPI : Plugin
     {
 
