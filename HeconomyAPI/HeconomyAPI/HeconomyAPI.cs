@@ -69,6 +69,7 @@ namespace HeconomyAPI
             Context.PluginManager.LoadCommands(new Money(this));
             Context.PluginManager.LoadCommands(new Pay(this));
             Context.PluginManager.LoadCommands(new View(this));
+            Context.PluginManager.LoadCommands(new Rank(this));
         }
 
         private void SetPluginSource()

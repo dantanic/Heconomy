@@ -80,6 +80,7 @@
     <Compile Include="Assist\Resource.cs" />
     <Compile Include="Command\Money.cs" />
     <Compile Include="Command\Pay.cs" />
+    <Compile Include="Command\Rank.cs" />
     <Compile Include="Command\View.cs" />
     <Compile Include="PlayerListener.cs" />
     <Compile Include="HeconomyAPI.cs" />
