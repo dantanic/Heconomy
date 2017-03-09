@@ -176,5 +176,7 @@ namespace HeconomyAPI
 
             SavePlayerData(path, data);
         }
+
+        public string[] GetUsers() => Directory.GetFiles(GetPluginSource() + "\\users");
     }
 }
