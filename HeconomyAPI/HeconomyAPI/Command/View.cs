@@ -13,6 +13,7 @@
 
 using MiNET;
 using MiNET.Plugins.Attributes;
+using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
@@ -40,12 +41,12 @@ namespace HeconomyAPI.Command
                 {
                     Player target = Plugin.GetPlayer(player, sender.Level);
 
-                    sender.SendMessage(target.Username + "'s money amount: " + amount + symbol);
+                    sender.SendMessage(ChatColors.Green + target.Username + "'s money amount: " + amount + symbol);
 
                     return;
                 }
 
-                sender.SendMessage(player + "'s money amount: " + amount + symbol);
+                sender.SendMessage(ChatColors.Green + player + "'s money amount: " + amount + symbol);
             }
         }
     }

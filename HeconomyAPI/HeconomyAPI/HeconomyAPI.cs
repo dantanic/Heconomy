@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -69,7 +70,7 @@ namespace HeconomyAPI
             Context.PluginManager.LoadCommands(new Money(this));
             Context.PluginManager.LoadCommands(new Pay(this));
             Context.PluginManager.LoadCommands(new View(this));
-            Context.PluginManager.LoadCommands(new Rank(this));
+            Context.PluginManager.LoadCommands(new Top(this));
         }
 
         private void SetPluginSource()
@@ -122,10 +123,8 @@ namespace HeconomyAPI
             File.WriteAllText(data, item.ToString());
         }
 
-        public Player GetPlayer(string player, Level level)
-        {
-            return level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
-        }
+        public Player GetPlayer(string player, Level level) 
+            => level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
 
         /*
                   .o.       ooooooooo.   ooooo 
@@ -137,25 +136,17 @@ namespace HeconomyAPI
             o88o     o8888o o888o        o888o 
         */
 
-        public static HeconomyAPI GetAPI()
-        {
-            return Object;
-        }
+        public static HeconomyAPI GetAPI() 
+            => Object;
 
-        public string GetMoneySymbol()
-        {
-            return Resource.GetProperty("Symbol");
-        }
+        public string GetMoneySymbol() 
+            => Resource.GetProperty("Symbol");
 
-        public int GetDefaultMoney()
-        {
-            return int.Parse(Resource.GetProperty("DefaultMoney"));
-        }
+        public int GetDefaultMoney() 
+            => int.Parse(Resource.GetProperty("DefaultMoney"));
 
-        public int GetMinimumMoney()
-        {
-            return int.Parse(Resource.GetProperty("MinMoney"));
-        }
+        public int GetMinimumMoney() 
+            => int.Parse(Resource.GetProperty("MinMoney"));
 
         public int GetMoney(string player)
         {
@@ -177,6 +168,7 @@ namespace HeconomyAPI
             SavePlayerData(path, data);
         }
 
-        public string[] GetUsers() => Directory.GetFiles(GetPluginSource() + "\\users");
+        public string[] GetUsers() 
+            => Directory.GetFiles(GetPluginSource() + "\\users");
     }
 }

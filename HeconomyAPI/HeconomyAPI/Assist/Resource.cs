@@ -38,10 +38,7 @@ namespace HeconomyAPI.Assist
             Source = Plugin.GetPluginSource();
         }
 
-        private string GetResourceString()
-        {
-            return new WebClient().DownloadString(Encoding.UTF8.GetString(Path));
-        }
+        private string GetResourceString() => new WebClient().DownloadString(Encoding.UTF8.GetString(Path));
 
         private void LoadResource(string data)
         {

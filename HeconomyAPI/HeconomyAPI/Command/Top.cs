@@ -12,8 +12,8 @@
 */
 
 using MiNET;
-using MiNET.Plugins;
 using MiNET.Plugins.Attributes;
+using MiNET.Utils;
 
 using System.IO;
 using Newtonsoft.Json.Linq;
@@ -21,17 +21,17 @@ using Newtonsoft.Json.Linq;
 namespace HeconomyAPI.Command
 {
 
-    public class Rank
+    public class Top
     {
 
         private HeconomyAPI Plugin;
 
-        public Rank(HeconomyAPI plugin)
+        public Top(HeconomyAPI plugin)
         {
             Plugin = plugin;
         }
 
-        [Command(Name = "rank", Description = "Shows money ranks in server.", Permission = "heconomyapi.command.rank")]
+        [Command(Name = "top", Description = "Shows money ranks in server.", Permission = "heconomyapi.command.rank")]
         public void Execute(Player sender)
         {
             int rank = 1;
@@ -42,12 +42,12 @@ namespace HeconomyAPI.Command
             {
                 JObject data = JObject.Parse(File.ReadAllText(path));
 
-                message += rank + ": " + Path.GetFileName(path).Replace(".json", "") + ", " + data["Money"] + Plugin.GetMoneySymbol() + "\n";
+                message += ChatColors.Green + rank + ": " + Path.GetFileName(path).Replace(".json", "") + ", " + data["Money"] + Plugin.GetMoneySymbol() + "\n";
 
                 ++rank;
             }
 
-            sender.SendMessage(rank + " player's money ranking.");
+            sender.SendMessage(ChatColors.Green + (rank - 1) + " of players money ranking.");
             sender.SendMessage(message);
         }
 

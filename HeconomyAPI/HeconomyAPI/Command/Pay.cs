@@ -13,6 +13,7 @@
 
 using MiNET;
 using MiNET.Plugins.Attributes;
+using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
@@ -43,9 +44,9 @@ namespace HeconomyAPI.Command
                     Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
                     Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
 
-                    sender.SendMessage("You paid " + amount + symbol + " to " + receiver.Username + ".");
+                    sender.SendMessage(ChatColors.Green + "You paid " + amount + symbol + " to " + receiver.Username + ".");
 
-                    receiver.SendMessage("You have received " + amount + symbol + " from " + sender.Username + ".");
+                    receiver.SendMessage(ChatColors.Green + "You have received " + amount + symbol + " from " + sender.Username + ".");
                 }
             }
         }

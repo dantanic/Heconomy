@@ -13,6 +13,7 @@
 
 using MiNET;
 using MiNET.Plugins.Attributes;
+using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
@@ -34,7 +35,7 @@ namespace HeconomyAPI.Command
 
             string symbol = Plugin.GetMoneySymbol();
 
-            sender.SendMessage("Your money amount: " + amount + symbol);
+            sender.SendMessage(ChatColors.Green + "Your money amount: " + amount + symbol);
         }
     }
 }
