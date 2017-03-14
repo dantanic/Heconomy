@@ -20,10 +20,10 @@ using System.Text;
 namespace HeconomyAPI.Assist
 {
 
-    public class Resource
+    public class Config
     {
 
-        private dynamic Plugin;
+        private HeconomyAPI Plugin;
 
         private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0hlcmJQbHVnaW5zL0hlY29ub215L21hc3Rlci9IZWNvbm9teUFQSS9IZWNvbm9teUFQSS9SZXNvdXJjZXMvc2V0dGluZ3MuY29uZg==");
 
@@ -31,11 +31,13 @@ namespace HeconomyAPI.Assist
 
         private string Source;
 
-        public Resource(HeconomyAPI plugin)
+        public Config(HeconomyAPI plugin)
         {
             Plugin = plugin;
 
-            Source = Plugin.GetPluginSource();
+            Source = Plugin.GetDataFolder();
+
+            CreateObject();
         }
 
         private string GetResourceString() => new WebClient().DownloadString(Encoding.UTF8.GetString(Path));

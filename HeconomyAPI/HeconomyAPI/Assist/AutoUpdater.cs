@@ -36,6 +36,8 @@ namespace HeconomyAPI.Assist
             Version = JObject.Parse(GetVersionString());
 
             Console.WriteLine(HeconomyAPI.Prefix + " AutoUpdater has been enabled, checking updates...");
+
+            Identify();
         }
 
         private string GetVersionString()

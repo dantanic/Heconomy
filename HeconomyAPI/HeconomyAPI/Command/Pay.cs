@@ -29,25 +29,42 @@ namespace HeconomyAPI.Command
         }
 
         [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
+        public void Execute(Player sender)
+        {
+            sender.SendMessage(ChatColors.Green + "Usage: /pay <player: string> <amount: int>");
+        }
+
+        [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
+        public void Execute(Player sender, string player)
+        {
+            sender.SendMessage(ChatColors.Green + "Usage: /pay <player: string> <amount: int>");
+        }
+
+        [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
         public void Execute(Player sender, string player, int amount)
         {
             string symbol = Plugin.GetMoneySymbol();
 
-            if((Plugin.IsRegisteredPlayer(player)) && (Plugin.GetPlayer(player, sender.Level) != null))
+            int minimum = Plugin.GetMinimumMoney();
+
+            if((!Plugin.IsRegisteredPlayer(player)) || (Plugin.GetPlayer(player, sender.Level) == null))
             {
-                int minimum = Plugin.GetMinimumMoney();
+                sender.SendMessage(ChatColors.Red + "Invaild player.");
+            }
+            else if((amount <= minimum) || (amount > Plugin.GetMoney(sender.Username)))
+            {
+                sender.SendMessage(ChatColors.Red + "Not enough money.");
+            }
+            else
+            {
+                Player receiver = Plugin.GetPlayer(player, sender.Level);
 
-                if((amount > minimum) && (amount <= Plugin.GetMoney(sender.Username)))
-                {
-                    Player receiver = Plugin.GetPlayer(player, sender.Level);
+                Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
+                Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
 
-                    Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
-                    Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
+                sender.SendMessage(ChatColors.Blue + "You paid " + amount + symbol + " to " + receiver.Username + ".");
 
-                    sender.SendMessage(ChatColors.Green + "You paid " + amount + symbol + " to " + receiver.Username + ".");
-
-                    receiver.SendMessage(ChatColors.Green + "You have received " + amount + symbol + " from " + sender.Username + ".");
-                }
+                receiver.SendMessage(ChatColors.Blue + "You have received " + amount + symbol + " from " + sender.Username + ".");
             }
         }
     }

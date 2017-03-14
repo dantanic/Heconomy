@@ -16,6 +16,7 @@ using MiNET.Plugins.Attributes;
 using MiNET.Utils;
 
 using System.IO;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 
 namespace HeconomyAPI.Command
@@ -31,18 +32,26 @@ namespace HeconomyAPI.Command
             Plugin = plugin;
         }
 
-        [Command(Name = "top", Description = "Shows money ranks in server.", Permission = "heconomyapi.command.rank")]
+        /*[Command(Name = "top", Description = "Shows money ranks in server.", Permission = "heconomyapi.command.rank")]
         public void Execute(Player sender)
         {
             int rank = 1;
 
             string message = string.Empty;
 
-            foreach(string path in Plugin.GetUsers())
+            foreach (string path in Plugin.GetUsers())
             {
-                JObject data = JObject.Parse(File.ReadAllText(path));
+                string key = Path.GetFileName(path).Replace(".json", "");
+                int value = int.Parse(JObject.Parse(File.ReadAllText(path))["Money"].ToString());
 
-                message += ChatColors.Green + rank + ": " + Path.GetFileName(path).Replace(".json", "") + ", " + data["Money"] + Plugin.GetMoneySymbol() + "\n";
+                SortedDictionary<string, int> Rank = new SortedDictionary<string, int>();
+
+                Rank[key] = value;
+
+                foreach(KeyValuePair<string, int> kvp in Rank)
+                {
+                    message += ChatColors.Green + rank + ": " + kvp.Key + ", " + kvp.Value + Plugin.GetMoneySymbol() + "\n";
+                }
 
                 ++rank;
             }
@@ -55,6 +64,6 @@ namespace HeconomyAPI.Command
         public void Execute(Player sender, string player)
         {
 
-        }
+        }*/
     }
 }

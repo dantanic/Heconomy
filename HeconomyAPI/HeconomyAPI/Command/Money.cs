@@ -31,11 +31,11 @@ namespace HeconomyAPI.Command
         [Command(Name = "money", Description = "Shows your money amount.", Permission = "heconomyapi.command.money")]
         public void Execute(Player sender)
         {
-            int amount = Plugin.GetMoney(sender.Username);
-
             string symbol = Plugin.GetMoneySymbol();
 
-            sender.SendMessage(ChatColors.Green + "Your money amount: " + amount + symbol);
+            int amount = Plugin.GetMoney(sender.Username);
+
+            sender.SendMessage(ChatColors.Blue + "Your money amount: " + amount + symbol);
         }
     }
 }

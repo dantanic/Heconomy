@@ -13,6 +13,7 @@
 
 using HeconomyAPI.Assist;
 using HeconomyAPI.Command;
+using HeconomyAPI.Package;
 
 using MiNET;
 using MiNET.Plugins;
@@ -23,7 +24,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -37,32 +37,27 @@ namespace HeconomyAPI
 
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
-        private static HeconomyAPI Object;
+        private static HeconomyAPI Instance;
 
         private AutoUpdater AutoUpdater;
+        private Config Config;
 
-        private static Resource Resource;
+        private Connect Connect;
 
         protected override void OnEnable()
         {
-            Object = this;
+            Instance = this;
+
+            @Directory.CreateDirectory(GetDataFolder());
+            @Directory.CreateDirectory(GetDataFolder() + @"users\");
+
+            AutoUpdater = new AutoUpdater(this);
+
+            Config = new Config(this);
 
             RegisterCommands();
 
-            SetPluginSource();
-
-            Resource = new Resource(this);
-
-            Resource.CreateObject();
-
-            SetUpdateState();
-
-            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
-            {
-                Player player = args.Player;
-
-                player.PlayerJoin += new PlayerListener(this).CallEvent;
-            };
+            RegisterPackages();
         }
 
         private void RegisterCommands()
@@ -73,48 +68,28 @@ namespace HeconomyAPI
             Context.PluginManager.LoadCommands(new Top(this));
         }
 
-        private void SetPluginSource()
+        private void RegisterPackages()
         {
-            @Directory.CreateDirectory(GetPluginSource());
-            @Directory.CreateDirectory(GetPluginSource() + "\\users");
-        }
+            Connect = new Connect(this);
 
-        private void SetUpdateState()
-        {
-            string state = Resource.GetProperty("AutoUpdater");
-
-            if (state.Contains("true"))
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
             {
-                AutoUpdater = new AutoUpdater(this);
-
-                AutoUpdater.Identify();
-            }
+                args.Player.PlayerJoin += Connect.Package;
+            };
         }
 
-        public string GetPluginSource()
-        {
-            string assembly = Assembly.GetExecutingAssembly().GetName().CodeBase;
+        public string GetDataFolder() 
+            => Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)).LocalPath, @"HeconomyAPI\");
 
-            return Path.Combine(new Uri(Path.GetDirectoryName(assembly)).LocalPath, "HeconomyAPI");
-        }
+        public bool IsRegisteredPlayer(string player) 
+            => File.Exists(GetDataFolder() + @"users\" + player.ToLower() + ".json");
 
-        private void SavePlayerData(string path, JObject jobject)
-        {
-            string data = JsonConvert.SerializeObject(jobject, Formatting.Indented);
-
-            File.WriteAllText(path, data);
-        }
-
-        public bool IsRegisteredPlayer(string player)
-        {
-            string data = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
-
-            return File.Exists(data);
-        }
+        public Player GetPlayer(string player, Level level) 
+            => level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
 
         public void RegisterPlayer(Player player)
         {
-            string data = GetPluginSource() + "\\users\\" + player.Username.ToLower() + ".json";
+            string data = GetDataFolder() + @"users\" + player.Username.ToLower() + ".json";
 
             JObject item = new JObject(
                 new JProperty("Money", GetDefaultMoney())
@@ -122,9 +97,6 @@ namespace HeconomyAPI
 
             File.WriteAllText(data, item.ToString());
         }
-
-        public Player GetPlayer(string player, Level level) 
-            => level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
 
         /*
                   .o.       ooooooooo.   ooooo 
@@ -134,41 +106,42 @@ namespace HeconomyAPI
               .88ooo8888.    888          888  
              .8'     `888.   888          888  
             o88o     o8888o o888o        o888o 
+
+            You can using HeconomyAPI public functions.
         */
 
-        public static HeconomyAPI GetAPI() 
-            => Object;
+        public static HeconomyAPI GetInstance() 
+            => Instance;
 
         public string GetMoneySymbol() 
-            => Resource.GetProperty("Symbol");
+            => Config.GetProperty("Symbol");
 
         public int GetDefaultMoney() 
-            => int.Parse(Resource.GetProperty("DefaultMoney"));
+            => int.Parse(Config.GetProperty("DefaultMoney"));
 
         public int GetMinimumMoney() 
-            => int.Parse(Resource.GetProperty("MinMoney"));
+            => int.Parse(Config.GetProperty("MinMoney"));
 
         public int GetMoney(string player)
         {
-            string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
+            string data = GetDataFolder() + @"users\" + player.ToLower() + ".json";
 
-            JObject data = JObject.Parse(File.ReadAllText(path));
+            JObject item = JObject.Parse(File.ReadAllText(data));
 
-            return int.Parse(data["Money"].ToString());
+            return int.Parse(item["Money"].ToString());
         }
 
         public void SetMoney(string player, int amount)
         {
-            string path = GetPluginSource() + "\\users\\" + player.ToLower() + ".json";
+            string data = GetDataFolder() + @"users\" + player.ToLower() + ".json";
 
-            JObject data = JObject.Parse(File.ReadAllText(path));
+            JObject item = JObject.Parse(File.ReadAllText(data));
 
-            data["Money"] = amount;
+            item["Money"] = amount;
 
-            SavePlayerData(path, data);
+            string input = JsonConvert.SerializeObject(item, Formatting.Indented);
+
+            File.WriteAllText(data, input);
         }
-
-        public string[] GetUsers() 
-            => Directory.GetFiles(GetPluginSource() + "\\users");
     }
 }

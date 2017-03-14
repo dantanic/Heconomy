@@ -29,25 +29,22 @@ namespace HeconomyAPI.Command
         }
 
         [Command(Name = "view", Description = "Shows other player's money amount.", Permission = "heconomyapi.command.view")]
+        public void Execute(Player sender)
+        {
+            sender.SendMessage(ChatColors.Green + "Usage: /view <player: string>");
+        }
+
+        [Command(Name = "view", Description = "Shows other player's money amount.", Permission = "heconomyapi.command.view")]
         public void Execute(Player sender, string player)
         {
             string symbol = Plugin.GetMoneySymbol();
 
-            if (Plugin.IsRegisteredPlayer(player))
-            {
-                int amount = Plugin.GetMoney(player);
+            int amount = Plugin.GetMoney(player);
 
-                if (Plugin.GetPlayer(player, sender.Level) != null)
-                {
-                    Player target = Plugin.GetPlayer(player, sender.Level);
-
-                    sender.SendMessage(ChatColors.Green + target.Username + "'s money amount: " + amount + symbol);
-
-                    return;
-                }
-
-                sender.SendMessage(ChatColors.Green + player + "'s money amount: " + amount + symbol);
-            }
+            if (!Plugin.IsRegisteredPlayer(player))
+                sender.SendMessage(ChatColors.Red + "Invaild player.");
+            else
+                sender.SendMessage(ChatColors.Blue + player + "'s money amount: " + amount + symbol);
         }
     }
 }

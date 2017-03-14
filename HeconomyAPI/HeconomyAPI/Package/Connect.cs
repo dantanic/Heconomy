@@ -15,20 +15,20 @@ using MiNET;
 
 using System;
 
-namespace HeconomyAPI
+namespace HeconomyAPI.Package
 {
 
-    public class PlayerListener
+    public class Connect
     {
 
         private HeconomyAPI Plugin;
 
-        public PlayerListener(HeconomyAPI plugin)
+        public Connect(HeconomyAPI plugin)
         {
             Plugin = plugin;
         }
 
-        public void CallEvent(object sender, PlayerEventArgs eventArgs)
+        public void Package(object sender, PlayerEventArgs eventArgs)
         {
             Player player = eventArgs.Player;
 
