@@ -17,10 +17,8 @@ using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
-
     public class Money
     {
-
         private HeconomyAPI Plugin;
 
         public Money(HeconomyAPI plugin)
@@ -32,9 +30,7 @@ namespace HeconomyAPI.Command
         public void Execute(Player sender)
         {
             string symbol = Plugin.GetMoneySymbol();
-
             int amount = Plugin.GetMoney(sender.Username);
-
             sender.SendMessage(ChatColors.Blue + "Your money amount: " + amount + symbol);
         }
     }

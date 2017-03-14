@@ -17,14 +17,13 @@ using MiNET.Utils;
 
 using System.IO;
 using System.Collections.Generic;
+
 using Newtonsoft.Json.Linq;
 
 namespace HeconomyAPI.Command
 {
-
     public class Top
     {
-
         private HeconomyAPI Plugin;
 
         public Top(HeconomyAPI plugin)
@@ -36,26 +35,19 @@ namespace HeconomyAPI.Command
         public void Execute(Player sender)
         {
             int rank = 1;
-
             string message = string.Empty;
-
             foreach (string path in Plugin.GetUsers())
             {
                 string key = Path.GetFileName(path).Replace(".json", "");
                 int value = int.Parse(JObject.Parse(File.ReadAllText(path))["Money"].ToString());
-
                 SortedDictionary<string, int> Rank = new SortedDictionary<string, int>();
-
                 Rank[key] = value;
-
                 foreach(KeyValuePair<string, int> kvp in Rank)
                 {
                     message += ChatColors.Green + rank + ": " + kvp.Key + ", " + kvp.Value + Plugin.GetMoneySymbol() + "\n";
                 }
-
                 ++rank;
             }
-
             sender.SendMessage(ChatColors.Green + (rank - 1) + " of players money ranking.");
             sender.SendMessage(message);
         }
@@ -63,7 +55,6 @@ namespace HeconomyAPI.Command
         [Command(Name = "rank", Description = "Shows money ranks in server.", Permission = "heconomyapi.command.rank")]
         public void Execute(Player sender, string player)
         {
-
         }*/
     }
 }

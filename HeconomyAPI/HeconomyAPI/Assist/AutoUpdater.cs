@@ -19,10 +19,8 @@ using System.Text;
 
 namespace HeconomyAPI.Assist
 {
-
     public class AutoUpdater
     {
-
         private HeconomyAPI Plugin;
 
         private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==");
@@ -32,26 +30,15 @@ namespace HeconomyAPI.Assist
         public AutoUpdater(HeconomyAPI plugin)
         {
             Plugin = plugin;
-
             Version = JObject.Parse(GetVersionString());
-
             Console.WriteLine(HeconomyAPI.Prefix + " AutoUpdater has been enabled, checking updates...");
-
-            Identify();
+            if (Version.HeconomyAPI > 1.2) Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, please download new version or inquire developer.");
+            else Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.2");
         }
 
         private string GetVersionString()
         {
             return new WebClient().DownloadString(Encoding.UTF8.GetString(Path));
-        }
-
-        public void Identify()
-        {
-            if (Version.HeconomyAPI > 1.2)
-                Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, please download new version or inquire developer.");
-
-            else
-                Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.2");
         }
     }
 }

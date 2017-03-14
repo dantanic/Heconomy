@@ -17,10 +17,8 @@ using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
-
     public class View
     {
-
         private HeconomyAPI Plugin;
 
         public View(HeconomyAPI plugin)
@@ -38,13 +36,9 @@ namespace HeconomyAPI.Command
         public void Execute(Player sender, string player)
         {
             string symbol = Plugin.GetMoneySymbol();
-
             int amount = Plugin.GetMoney(player);
-
-            if (!Plugin.IsRegisteredPlayer(player))
-                sender.SendMessage(ChatColors.Red + "Invaild player.");
-            else
-                sender.SendMessage(ChatColors.Blue + player + "'s money amount: " + amount + symbol);
+            if (!Plugin.IsRegisteredPlayer(player)) sender.SendMessage(ChatColors.Red + "Invaild player.");
+            else sender.SendMessage(ChatColors.Blue + player + "'s money amount: " + amount + symbol);
         }
     }
 }

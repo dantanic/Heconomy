@@ -17,10 +17,8 @@ using System;
 
 namespace HeconomyAPI.Package
 {
-
     public class Connect
     {
-
         private HeconomyAPI Plugin;
 
         public Connect(HeconomyAPI plugin)
@@ -31,11 +29,9 @@ namespace HeconomyAPI.Package
         public void Package(object sender, PlayerEventArgs eventArgs)
         {
             Player player = eventArgs.Player;
-
             if (!Plugin.IsRegisteredPlayer(player.Username))
             {
                 Plugin.RegisterPlayer(player);
-
                 Console.WriteLine(HeconomyAPI.Prefix + " Could not find " + player.Username + "'s data, registering " + player.Username + "'s data...");
             }
         }

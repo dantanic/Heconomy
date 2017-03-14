@@ -30,11 +30,9 @@ using System.Reflection;
 
 namespace HeconomyAPI
 {
-
     [Plugin(PluginName = "HeconomyAPI", Description = "An advanced economy plugin for MiNET.", PluginVersion = "1.2", Author = "Herb9")]
     public class HeconomyAPI : Plugin
     {
-
         public const string Prefix = "\x5b\x48\x65\x63\x6f\x6e\x6f\x6d\x79\x5d";
 
         private static HeconomyAPI Instance;
@@ -42,21 +40,14 @@ namespace HeconomyAPI
         private AutoUpdater AutoUpdater;
         private Config Config;
 
-        private Connect Connect;
-
         protected override void OnEnable()
         {
             Instance = this;
-
             @Directory.CreateDirectory(GetDataFolder());
-            @Directory.CreateDirectory(GetDataFolder() + @"users\");
-
+            @Directory.CreateDirectory(GetDataFolder() + @"\users\");
             AutoUpdater = new AutoUpdater(this);
-
             Config = new Config(this);
-
             RegisterCommands();
-
             RegisterPackages();
         }
 
@@ -70,77 +61,49 @@ namespace HeconomyAPI
 
         private void RegisterPackages()
         {
-            Connect = new Connect(this);
-
+            Connect connect = new Connect(this);
             Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
             {
-                args.Player.PlayerJoin += Connect.Package;
+                args.Player.PlayerJoin += connect.Package;
             };
         }
+         
+        public string GetDataFolder() => Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)).LocalPath, "HeconomyAPI");
 
-        public string GetDataFolder() 
-            => Path.Combine(new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)).LocalPath, @"HeconomyAPI\");
+        public bool IsRegisteredPlayer(string player) => File.Exists(GetDataFolder() + @"\users\" + player.ToLower() + ".json");
 
-        public bool IsRegisteredPlayer(string player) 
-            => File.Exists(GetDataFolder() + @"users\" + player.ToLower() + ".json");
-
-        public Player GetPlayer(string player, Level level) 
-            => level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
+        public Player GetPlayer(string player, Level level) => level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value ?? null;
 
         public void RegisterPlayer(Player player)
         {
-            string data = GetDataFolder() + @"users\" + player.Username.ToLower() + ".json";
-
+            string data = GetDataFolder() + @"\users\" + player.Username.ToLower() + ".json";
             JObject item = new JObject(
                 new JProperty("Money", GetDefaultMoney())
                 );
-
             File.WriteAllText(data, item.ToString());
         }
 
-        /*
-                  .o.       ooooooooo.   ooooo 
-                 .888.      `888   `Y88. `888' 
-                .8"888.      888   .d88'  888  
-               .8' `888.     888ooo88P'   888  
-              .88ooo8888.    888          888  
-             .8'     `888.   888          888  
-            o88o     o8888o o888o        o888o 
+        public static HeconomyAPI GetInstance() => Instance;
 
-            You can using HeconomyAPI public functions.
-        */
+        public string GetMoneySymbol() => Config.GetProperty("Symbol");
 
-        public static HeconomyAPI GetInstance() 
-            => Instance;
+        public int GetDefaultMoney() => int.Parse(Config.GetProperty("DefaultMoney"));
 
-        public string GetMoneySymbol() 
-            => Config.GetProperty("Symbol");
-
-        public int GetDefaultMoney() 
-            => int.Parse(Config.GetProperty("DefaultMoney"));
-
-        public int GetMinimumMoney() 
-            => int.Parse(Config.GetProperty("MinMoney"));
+        public int GetMinimumMoney() => int.Parse(Config.GetProperty("MinMoney"));
 
         public int GetMoney(string player)
         {
-            string data = GetDataFolder() + @"users\" + player.ToLower() + ".json";
-
+            string data = GetDataFolder() + @"\users\" + player.ToLower() + ".json";
             JObject item = JObject.Parse(File.ReadAllText(data));
-
             return int.Parse(item["Money"].ToString());
         }
 
         public void SetMoney(string player, int amount)
         {
-            string data = GetDataFolder() + @"users\" + player.ToLower() + ".json";
-
+            string data = GetDataFolder() + @"\users\" + player.ToLower() + ".json";
             JObject item = JObject.Parse(File.ReadAllText(data));
-
             item["Money"] = amount;
-
             string input = JsonConvert.SerializeObject(item, Formatting.Indented);
-
             File.WriteAllText(data, input);
         }
     }

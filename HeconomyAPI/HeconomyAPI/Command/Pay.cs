@@ -17,10 +17,8 @@ using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
-
     public class Pay
     {
-
         private HeconomyAPI Plugin;
 
         public Pay(HeconomyAPI plugin)
@@ -44,9 +42,7 @@ namespace HeconomyAPI.Command
         public void Execute(Player sender, string player, int amount)
         {
             string symbol = Plugin.GetMoneySymbol();
-
             int minimum = Plugin.GetMinimumMoney();
-
             if((!Plugin.IsRegisteredPlayer(player)) || (Plugin.GetPlayer(player, sender.Level) == null))
             {
                 sender.SendMessage(ChatColors.Red + "Invaild player.");
@@ -58,12 +54,9 @@ namespace HeconomyAPI.Command
             else
             {
                 Player receiver = Plugin.GetPlayer(player, sender.Level);
-
                 Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
                 Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
-
                 sender.SendMessage(ChatColors.Blue + "You paid " + amount + symbol + " to " + receiver.Username + ".");
-
                 receiver.SendMessage(ChatColors.Blue + "You have received " + amount + symbol + " from " + sender.Username + ".");
             }
         }
