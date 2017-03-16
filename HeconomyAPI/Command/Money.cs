@@ -17,21 +17,23 @@ using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
-    public class Money
+    public class Money : Command
     {
-        private HeconomyAPI Plugin;
+        public HeconomyAPI Plugin { get; set; }
+
+        public string Symbol { get; set; }
 
         public Money(HeconomyAPI plugin)
         {
             Plugin = plugin;
+
+            Symbol = Plugin.GetMoneySymbol();
         }
 
-        [Command(Name = "money", Description = "Shows your money amount.", Permission = "heconomyapi.command.money")]
+        [Command(Name = "money", Description = "Shows your money.", Permission = "heconomyapi.command.money")]
         public void Execute(Player sender)
         {
-            string symbol = Plugin.GetMoneySymbol();
-            int amount = Plugin.GetMoney(sender.Username);
-            sender.SendMessage(ChatColors.Blue + "Your money amount: " + amount + symbol);
+            sender.SendMessage(ChatColors.DarkGreen + "Your money: " + Plugin.GetMoney(sender.Username) + Symbol);
         }
     }
 }

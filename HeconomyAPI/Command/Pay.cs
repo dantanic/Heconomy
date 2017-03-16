@@ -17,13 +17,23 @@ using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
-    public class Pay
+    public class Pay : Command
     {
-        private HeconomyAPI Plugin;
+        public HeconomyAPI Plugin { get; set; }
+
+        public string Symbol { get; set; }
+
+        public int MinimumMoney { get; set; }
+        public int DefaultMoney { get; set; }
 
         public Pay(HeconomyAPI plugin)
         {
             Plugin = plugin;
+
+            Symbol = Plugin.GetMoneySymbol();
+
+            MinimumMoney = Plugin.GetMinimumMoney();
+            DefaultMoney = Plugin.GetDefaultMoney();
         }
 
         [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
@@ -41,23 +51,22 @@ namespace HeconomyAPI.Command
         [Command(Name = "pay", Description = "Pays money to player.", Permission = "heconomyapi.command.pay")]
         public void Execute(Player sender, string player, int amount)
         {
-            string symbol = Plugin.GetMoneySymbol();
-            int minimum = Plugin.GetMinimumMoney();
             if((!Plugin.IsRegisteredPlayer(player)) || (Plugin.GetPlayer(player, sender.Level) == null))
             {
                 sender.SendMessage(ChatColors.Red + "Invaild player.");
             }
-            else if((amount <= minimum) || (amount > Plugin.GetMoney(sender.Username)))
+            else if((amount <= MinimumMoney) || (amount > Plugin.GetMoney(sender.Username)))
             {
                 sender.SendMessage(ChatColors.Red + "Not enough money.");
             }
             else
             {
                 Player receiver = Plugin.GetPlayer(player, sender.Level);
+
                 Plugin.SetMoney(sender.Username, Plugin.GetMoney(sender.Username) - amount);
                 Plugin.SetMoney(receiver.Username, Plugin.GetMoney(receiver.Username) + amount);
-                sender.SendMessage(ChatColors.Blue + "You paid " + amount + symbol + " to " + receiver.Username + ".");
-                receiver.SendMessage(ChatColors.Blue + "You have received " + amount + symbol + " from " + sender.Username + ".");
+                sender.SendMessage(ChatColors.DarkGreen + "You paid " + amount + Symbol + " to " + receiver.Username + ".");
+                receiver.SendMessage(ChatColors.DarkGreen + "You have received " + amount + Symbol + " from " + sender.Username + ".");
             }
         }
     }

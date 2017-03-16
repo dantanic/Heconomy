@@ -12,27 +12,30 @@
 */
 
 using MiNET;
-
 using System;
 
-namespace HeconomyAPI.Package
+namespace HeconomyAPI
 {
-    public class Connect
+    public class RegisterEvent : HeconomyAPI
     {
-        private HeconomyAPI Plugin;
-
-        public Connect(HeconomyAPI plugin)
+        protected override void OnEnable()
         {
-            Plugin = plugin;
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
+            {
+                args.Player.PlayerJoin += PlayerJoin;
+            };
+
         }
 
-        public void Package(object sender, PlayerEventArgs eventArgs)
+        private void PlayerJoin(object sender, PlayerEventArgs eventArgs)
         {
             Player player = eventArgs.Player;
-            if (!Plugin.IsRegisteredPlayer(player.Username))
+
+            if (!IsRegisteredPlayer(player.Username))
             {
-                Plugin.RegisterPlayer(player);
-                Console.WriteLine(HeconomyAPI.Prefix + " Could not find " + player.Username + "'s data, registering " + player.Username + "'s data...");
+                RegisterPlayer(player);
+
+                Console.WriteLine(Prefix + " Could not find " + player.Username + "'s data, registering " + player.Username + "'s data...");
             }
         }
     }

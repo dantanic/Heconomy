@@ -14,21 +14,23 @@
 using MiNET;
 using MiNET.Plugins.Attributes;
 using MiNET.Utils;
-
 using System.IO;
 using System.Collections.Generic;
-
 using Newtonsoft.Json.Linq;
 
 namespace HeconomyAPI.Command
 {
-    public class Top
+    public class Top : Command
     {
-        private HeconomyAPI Plugin;
+        public HeconomyAPI Plugin { get; set; }
+
+        public string Symbol { get; set; }
 
         public Top(HeconomyAPI plugin)
         {
             Plugin = plugin;
+
+            Symbol = Plugin.GetMoneySymbol();
         }
 
         /*[Command(Name = "top", Description = "Shows money ranks in server.", Permission = "heconomyapi.command.rank")]

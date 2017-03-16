@@ -12,33 +12,28 @@
 */
 
 using Newtonsoft.Json.Linq;
-
 using System;
 using System.Net;
 using System.Text;
 
-namespace HeconomyAPI.Assist
+namespace HeconomyAPI.Util
 {
-    public class AutoUpdater
+    public class UpdateInfo
     {
-        private HeconomyAPI Plugin;
+        private HeconomyAPI Plugin { get; set; }
 
-        private byte[] Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==");
+        private byte[] B64Path = Convert.FromBase64String("aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2RhbnRhbmljL2pzb24vbWFzdGVyL2NhbGwuanNvbg==");
 
         private dynamic Version;
 
-        public AutoUpdater(HeconomyAPI plugin)
+        public UpdateInfo(HeconomyAPI plugin)
         {
             Plugin = plugin;
-            Version = JObject.Parse(GetVersionString());
-            Console.WriteLine(HeconomyAPI.Prefix + " AutoUpdater has been enabled, checking updates...");
-            if (Version.HeconomyAPI > 1.2) Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, please download new version or inquire developer.");
-            else Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.2");
-        }
+            Version = JObject.Parse(new WebClient().DownloadString(Encoding.UTF8.GetString(B64Path)));
 
-        private string GetVersionString()
-        {
-            return new WebClient().DownloadString(Encoding.UTF8.GetString(Path));
+            if (Version.HeconomyAPI > 1.2) Console.WriteLine(HeconomyAPI.Prefix + " New version has been found, please download new version or inquire developer.");
+
+            else Console.WriteLine(HeconomyAPI.Prefix + " You are currently using HeconomyAPI v1.2");
         }
     }
 }
