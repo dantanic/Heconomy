@@ -76,8 +76,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command\Command.cs" />
-    <Compile Include="RegisterEvent.cs" />
     <Compile Include="Util\Config.cs" />
     <Compile Include="Command\Money.cs" />
     <Compile Include="Command\Pay.cs" />
@@ -91,6 +89,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\settings.conf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="loadFromRemoteSources.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

@@ -30,7 +30,7 @@ namespace HeconomyAPI.Util
         public Config(HeconomyAPI plugin)
         {
             Plugin = plugin;
-            var path = Plugin.GetDataFolder() + "settings.conf";
+            var path = Plugin.GetDataFolder() + @"\settings.conf";
 
             if (!File.Exists(path)) File.WriteAllText(path, new WebClient().DownloadString(Encoding.UTF8.GetString(B64Path)));
 

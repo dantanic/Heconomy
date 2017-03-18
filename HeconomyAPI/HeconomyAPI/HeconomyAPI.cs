@@ -41,33 +41,12 @@ namespace HeconomyAPI
         public int MinimumMoney { get; set; }
         public int DefaultMoney { get; set; }
 
-        public static HeconomyAPI GetInstance() => Instance;
-
-        public string GetMoneySymbol() => Config.GetProperty("Symbol");
-
-        public int GetMinimumMoney() => int.Parse(Config.GetProperty("MinimumMoney"));
-
-        public int GetDefaultMoney() => int.Parse(Config.GetProperty("DefaultMoney"));
-
-        public int GetMoney(string player)
-        {
-            string path = GetDataFolder() + @"\users\" + player.ToLower() + ".json";
-            JObject data = JObject.Parse(File.ReadAllText(path));
-
-            return int.Parse(data["Money"].ToString());
-        }
-
-        public void SetMoney(string player, int amount)
-        {
-            string path = GetDataFolder() + @"\users\" + player.ToLower() + ".json";
-            JObject data = JObject.Parse(File.ReadAllText(path));
-            data["Money"] = amount;
-
-            File.WriteAllText(path, JsonConvert.SerializeObject(data, Formatting.Indented));
-        }
-
         protected override void OnEnable()
         {
+            @Directory.CreateDirectory(GetDataFolder());
+            @Directory.CreateDirectory(GetDataFolder() + @"\users");
+            RegisterCommands();
+
             UpdateInfo = new UpdateInfo(this);
             Config = new Config(this);
             Instance = this;
@@ -76,6 +55,23 @@ namespace HeconomyAPI
 
             MinimumMoney = int.Parse(Config.GetProperty("MinimumMoney"));
             DefaultMoney = int.Parse(Config.GetProperty("DefaultMoney"));
+
+            Context.Server.PlayerFactory.PlayerCreated += (sender, args) =>
+            {
+                args.Player.PlayerJoin += PlayerJoin;
+            };
+        }
+
+        private void PlayerJoin(object sender, PlayerEventArgs eventArgs)
+        {
+            Player player = eventArgs.Player;
+
+            if (!IsRegisteredPlayer(player.Username))
+            {
+                RegisterPlayer(player);
+
+                Console.WriteLine(Prefix + " Could not find " + player.Username + "'s data, registering " + player.Username + "'s data...");
+            }
         }
 
         private void RegisterCommands()
@@ -102,5 +98,30 @@ namespace HeconomyAPI
         }
 
         public Player GetPlayer(string player, Level level) => level.Players.ToList().Find(x => x.Value.Username.ToLower().Contains(player)).Value;
+
+        public static HeconomyAPI GetInstance() => Instance;
+
+        public string GetMoneySymbol() => Config.GetProperty("Symbol");
+
+        public int GetMinimumMoney() => int.Parse(Config.GetProperty("MinimumMoney"));
+
+        public int GetDefaultMoney() => int.Parse(Config.GetProperty("DefaultMoney"));
+
+        public int GetMoney(string player)
+        {
+            string path = GetDataFolder() + @"\users\" + player.ToLower() + ".json";
+            JObject data = JObject.Parse(File.ReadAllText(path));
+
+            return int.Parse(data["Money"].ToString());
+        }
+
+        public void SetMoney(string player, int amount)
+        {
+            string path = GetDataFolder() + @"\users\" + player.ToLower() + ".json";
+            JObject data = JObject.Parse(File.ReadAllText(path));
+            data["Money"] = amount;
+
+            File.WriteAllText(path, JsonConvert.SerializeObject(data, Formatting.Indented));
+        }
     }
 }

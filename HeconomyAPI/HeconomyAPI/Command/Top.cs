@@ -20,7 +20,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HeconomyAPI.Command
 {
-    public class Top : Command
+    public class Top
     {
         public HeconomyAPI Plugin { get; set; }
 

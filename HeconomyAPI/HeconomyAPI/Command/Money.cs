@@ -17,7 +17,7 @@ using MiNET.Utils;
 
 namespace HeconomyAPI.Command
 {
-    public class Money : Command
+    public class Money
     {
         public HeconomyAPI Plugin { get; set; }
 
